@@ -191,7 +191,7 @@ class HtmlParser {
   ];
   final List _specialTags = const ['script', 'style'];
 
-  List _stack = [];
+  List<String> _stack = [];
   List _result = [];
 
   Map<String, dynamic> _tag;
@@ -241,7 +241,7 @@ class HtmlParser {
 
             html = html.substring(tag.length);
             chars = false;
-
+            print('htmlend-->${html}');
             this._parseEndTag(tag);
           }
         }
@@ -261,10 +261,9 @@ class HtmlParser {
 
         if (chars) {
           index = html.indexOf('<');
-
           String text = (index < 0) ? html : html.substring(0, index);
-
           html = (index < 0) ? '' : html.substring(index);
+          print('htmlStart-->${html}');
           if (html.contains(ulTag)) {
             text = '• ' + text + '\n';
           } else if (html.contains(olTag)) {
@@ -276,24 +275,18 @@ class HtmlParser {
       } else {
         RegExp re =
             new RegExp(r'(.*)<\/' + this._getStackLastItem() + r'[^>]*>');
-
         html = html.replaceAllMapped(re, (Match match) {
           String text = match[0]
             ..replaceAll(new RegExp('<!--(.*?)-->'), '\$1')
             ..replaceAll(new RegExp('<!\[CDATA\[(.*?)]]>'), '\$1');
-
           this._appendNode(text);
-
           return '';
         });
-
         this._parseEndTag(this._getStackLastItem());
       }
-
       if (html == last) {
         throw 'Parse Error: ' + html;
       }
-
       last = html;
     }
 
@@ -368,7 +361,8 @@ class HtmlParser {
     // Find the closest opened tag of the same type
     else {
       for (pos = this._stack.length - 1; pos >= 0; pos--) {
-        if (this._stack[pos] == tagName) {
+        if (this._stack[pos] == tagName || tagName.contains(this._stack[pos])) {
+          this._stack.remove(tagName);
           break;
         }
       }
@@ -376,6 +370,7 @@ class HtmlParser {
 
     if (pos >= 0) {
       // Remove the open elements from the stack
+      print('_parseEndTag-->${pos}-->${this._stack.length}-->${this._stack}');
       this._stack.removeRange(pos, this._stack.length);
     }
   }
@@ -518,11 +513,14 @@ class HtmlParser {
   }
 
   void _appendNode(String text) {
+    print('text--->${text}-->${this._stack}');
     if (this._tag == null) {
       List<String> tags = ['p'];
       this._tag = {'label': tags, 'attrs': {}};
     }
-
+    if (this._stack != null) {
+      (this._tag['label'] as List<String>).addAll(this._stack);
+    }
     this._tag['text'] = text;
     this._tag['style'] =
         this._parseStyle(this._tag['label'], this._tag['attrs']);
