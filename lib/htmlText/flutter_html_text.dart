@@ -7,8 +7,6 @@ class HtmlText extends StatelessWidget {
 
   HtmlText({this.data, this.onTapCallback});
 
-  GestureRecognizer recognizer = new TapGestureRecognizer()..onTap = () {};
-
   Function onTapCallback;
 
   @override
@@ -440,7 +438,6 @@ class HtmlParser {
       for (Match match in matches) {
         param = match[1].trim();
         value = match[2].trim();
-        print('param--->${param}--->${value}');
         switch (param) {
           case 'color':
             if (this._color.hasMatch(value)) {
@@ -515,6 +512,9 @@ class HtmlParser {
     if (isAppendStartTag) {
       (this._tag['label'] as List<String>).add(tag);
     }
+    if (attrs.length > 0) {
+      this._tag['attrs'] = attrs;
+    }
   }
 
   void _appendNode(String text) {
@@ -529,10 +529,8 @@ class HtmlParser {
     this._tag['href'] =
         (this._tag['attrs']['href'] != null) ? this._tag['attrs']['href'] : '';
 
-    this._tag.remove('attrs');
-
     this._result.add(this._tag);
-
+    this._tag.remove('attrs');
     this._tag = null;
   }
 
