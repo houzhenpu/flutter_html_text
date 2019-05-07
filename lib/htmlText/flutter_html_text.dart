@@ -192,6 +192,7 @@ class HtmlParser {
   final List _specialTags = const ['script', 'style'];
 
   List<String> _stack = [];
+  List<String> _spanStyle = [];
   List _result = [];
 
   Map<String, dynamic> _tag;
@@ -241,7 +242,6 @@ class HtmlParser {
 
             html = html.substring(tag.length);
             chars = false;
-            print('htmlend-->${html}');
             this._parseEndTag(tag);
           }
         }
@@ -263,7 +263,6 @@ class HtmlParser {
           index = html.indexOf('<');
           String text = (index < 0) ? html : html.substring(0, index);
           html = (index < 0) ? '' : html.substring(index);
-          print('htmlStart-->${html}');
           if (html.contains(ulTag)) {
             text = '• ' + text + '\n';
           } else if (html.contains(olTag)) {
@@ -298,6 +297,7 @@ class HtmlParser {
     // Cleanup internal variables
     this._stack = [];
     this._result = [];
+    this._spanStyle = [];
 
     return result;
   }
@@ -343,8 +343,10 @@ class HtmlParser {
         } else if (this._fillAttrs.contains(attribute) != null) {
           value = attribute;
         }
-
         attrs[attribute] = value;
+        if (attribute.endsWith('style') && tagName.endsWith('span')) {
+          this._spanStyle.add(value);
+        }
       }
     }
 
@@ -360,6 +362,9 @@ class HtmlParser {
     }
     // Find the closest opened tag of the same type
     else {
+      if (tagName.contains('span')) {
+        this._spanStyle.removeLast();
+      }
       for (pos = this._stack.length - 1; pos >= 0; pos--) {
         if (this._stack[pos] == tagName || tagName.contains(this._stack[pos])) {
           this._stack.remove(tagName);
@@ -370,14 +375,17 @@ class HtmlParser {
 
     if (pos >= 0) {
       // Remove the open elements from the stack
-      print('_parseEndTag-->${pos}-->${this._stack.length}-->${this._stack}');
       this._stack.removeRange(pos, this._stack.length);
     }
   }
 
   TextStyle _parseStyle(List<String> tags, Map attrs) {
     Iterable<Match> matches;
-    String style = attrs['style'];
+    String spanStyle = '';
+    if (this._spanStyle.isNotEmpty) {
+      spanStyle = this._spanStyle.last.toString();
+    }
+    String style = '${spanStyle}${ attrs['style']}';
     String param;
     String value;
 
@@ -513,7 +521,6 @@ class HtmlParser {
   }
 
   void _appendNode(String text) {
-    print('text--->${text}-->${this._stack}');
     if (this._tag == null) {
       List<String> tags = ['p'];
       this._tag = {'label': tags, 'attrs': {}};
