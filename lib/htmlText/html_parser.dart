@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/htmlText/constants.dart';
 import 'package:flutter_app/htmlText/on_tap_data.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
@@ -51,10 +52,10 @@ class HtmlParser {
     if (e.nodes.length > 1) {
       imgElements.forEach((f) {
         outerHtml = outerHtml.replaceAll(
-            '${f.outerHtml}', '</p>-=-=<p>${f.outerHtml}-=-=<p>');
+            '${f.outerHtml}', '</p>$separator<p>${f.outerHtml}$separator<p>');
       });
     }
-    var htmlList = outerHtml.split('-=-=');
+    var htmlList = outerHtml.split(separator);
     int imageIndex = 0;
     htmlList.forEach((html) {
       if (html.contains("<img")) {
