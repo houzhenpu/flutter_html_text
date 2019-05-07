@@ -30,26 +30,8 @@ class HtmlParser {
 
     List<dom.Element> docBodyChildren = docBody.children;
     docBodyChildren.forEach((e) {
-      print('e.outerHtml--->${e.outerHtml}');
       if (e.outerHtml.contains("<img")) {
-        var imgElements = e.getElementsByTagName("img");
-        if (imgElements.length > 0) {
-          widgetList.add(new GestureDetector(
-            onTap: () {
-              if (onTapCallback != null) {
-                onTapCallback(OnTapData(
-                    url: imgElements[0].attributes['src'],
-                    type: OnTapType.img));
-              }
-            },
-            child: new CachedNetworkImage(
-              fadeInDuration: const Duration(seconds: 2),
-              fadeOutDuration: const Duration(seconds: 1),
-              imageUrl: imgElements[0].attributes['src'],
-              fit: BoxFit.cover,
-            ),
-          ));
-        }
+        analysisHtmlImage(e, widgetList, onTapCallback);
       } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
         widgetList.add(new HtmlText(
           data: e.outerHtml,
@@ -59,5 +41,48 @@ class HtmlParser {
     });
 
     return widgetList;
+  }
+
+  void analysisHtmlImage(
+      dom.Element e, List<Widget> widgetList, Function onTapCallback) {
+    String outerHtml = e.outerHtml;
+
+    var imgElements = e.getElementsByTagName("img");
+    if (e.nodes.length > 1) {
+      imgElements.forEach((f) {
+        outerHtml = outerHtml.replaceAll(
+            '${f.outerHtml}', '</p>-=-=<p>${f.outerHtml}-=-=<p>');
+      });
+    }
+    var htmlList = outerHtml.split('-=-=');
+    int imageIndex = 0;
+    htmlList.forEach((html) {
+      if (html.contains("<img")) {
+        createImage(imgElements[imageIndex++].attributes['src'], widgetList,
+            onTapCallback);
+      } else {
+        widgetList.add(new HtmlText(
+          data: html,
+          onTapCallback: onTapCallback,
+        ));
+      }
+    });
+  }
+
+  void createImage(
+      String imageUrl, List<Widget> widgetList, Function onTapCallback) {
+    widgetList.add(new GestureDetector(
+      onTap: () {
+        if (onTapCallback != null) {
+          onTapCallback(OnTapData(url: imageUrl, type: OnTapType.img));
+        }
+      },
+      child: new CachedNetworkImage(
+        fadeInDuration: const Duration(seconds: 2),
+        fadeOutDuration: const Duration(seconds: 1),
+        imageUrl: imageUrl,
+        fit: BoxFit.cover,
+      ),
+    ));
   }
 }

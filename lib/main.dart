@@ -34,9 +34,11 @@ class SingleChildScrollViewTestRoute extends StatelessWidget {
   String moreHtml =
       '<span style="text-decoration: underline; color: #e8451a;"><em><strong>布局空间。Flutter借鉴了很多React</strong></em></span>';
   String emStrong =
-      '<p><em><strong>我个人</strong></em>还<em>是觉</em>得边界约束<strong>可能</strong>更直观一些</p>';
+      '<p>这样<span style="text-decoration: underline;">做<span style="text-decoration: underline; color: #e8451a;">的</span><strong>好处，</strong></span><span style="text-decoration: none;"><strong><span style="text-decoration: none; color: #92cf4f;">我<em>觉</em></span></strong></span><span style="text-decoration: underline;"><strong><em>得</em><em><a href="https://www.imooc.com/article/details/id/31493" title="可能是为了" target="_blank">可能是为了</a>了统一的渲染</em></strong><strong>。加入</strong>样</span>式，会</p>';
   String emStrong1 =
-      '<p><strong>在介绍Flutter布局之前，我们得先了解Flutter中的一些布局相关的特性</strong>。</p><p>1.1 边界约束（box constraints）</p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>box constraints有人也翻译</p></li><li><p>为盒约束、箱约束</p></li><li><p>，我个人还是觉得边界约束可能更直观一些。</p></li></ul><p>Flutter中的边界约束，是指</p><ol class=" list-paddingleft-2" style="list-style-type: decimal;"><li><p>widget可以按照指定限定</p></li><li><p>条件，来决定自身如何</p></li></ol><p>占用<span style="text-decoration: underline; color: #e8451a;"><em><strong>布局空间。Flutter借鉴了很多React</strong></em></span>相关的东西，<span style="color: #92cf4f;">包括一些布局思想</span>，但是它自身没有抽离出布局样式，而是用<span style="color: #0070c0;">不同的widget去实现不同</span>的布局，</p><p><strong><em>将样式嵌入widget中</em></strong>，用户<em><strong>可以像搭</strong></em>积木<em>一样写</em><strong>布局</strong>，<a href="http://www.moer.cn/stockInfo/cn_sh601989.htm" title="中国重工" target="_blank" style="text-decoration:underline;">中国重工</a>&nbsp;&nbsp;写法上跟React很像，只不过没了样式的设定。</p><p><img src="https://static.moer.cn/O/201904307b35e691b0332bba01bf1d1af85ee107.jpeg?mark=1" title="201904307b35e691b0332bba01bf1d1af85ee107.jpeg" alt=""/></p><p>作者：<a href="https://www.imooc.com/article/details/id/31493" title="侯爷" target="_blank">侯爷</a>链接：https://www.imooc.com/article/details/id/31493<br/>来源：慕课网</p><p><img src="https://static.moer.cn/staticFile/1080*1246A/201804251c4be5b27990001655b3b1467952675b.png" alt=""/><br/></p>';
+      '<p>这样做的<strong>好处，我<em>觉得了统一的渲染</em>加粗</strong>正常</p>';
+  String imageHtml = '<p>只给出很少的定制化的东西，将布局限</p><p>定在有限的<em><strong>让布局复杂不少</strong></em>范围内<img src="https://static.moer.cn/O/2019050777599ec7c9a0f1ac7ebabb4df81377d0.jpeg?mark=1" title="2019050777599ec7c9a0f1ac7ebabb4df81377d0.jpeg" alt=""/>中间的文字<img src="https://static.moer.cn/O/20190507cf596fa2ce5d10d685e9ee5d0e81fd87.jpeg?mark=1" title="20190507cf596fa2ce5d10d685e9ee5d0e81fd87.jpeg" alt=""/>，在完成布局的同时，</p><p><img src="https://static.moer.cn/O/201905077b35e691b0332bba01bf1d1af85ee107.jpeg?mark=1" title="201905077b35e691b0332bba01bf1d1af85ee107.jpeg" alt=""/></p><p>让整个渲染能够统一，</p>';
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +91,11 @@ class SingleChildScrollViewTestRoute extends StatelessWidget {
               Container(
                 child: new HtmlTextView(
                   data: emStrong1,
+                ),
+              ),
+              Container(
+                child: new HtmlTextView(
+                  data: imageHtml,
                 ),
               ),
             ],
