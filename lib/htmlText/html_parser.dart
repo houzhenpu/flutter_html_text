@@ -55,19 +55,19 @@ class HtmlParser {
             '${f.outerHtml}', '</p>$separator<p>${f.outerHtml}$separator<p>');
       });
     }
-    var htmlList = outerHtml.split(separator);
     int imageIndex = 0;
-    htmlList.forEach((html) {
-      if (html.contains("<img")) {
-        createImage(imgElements[imageIndex++].attributes['src'], widgetList,
-            onTapCallback);
-      } else {
-        widgetList.add(new HtmlText(
-          data: html,
-          onTapCallback: onTapCallback,
-        ));
-      }
-    });
+    outerHtml.split(separator)
+      ..forEach((html) {
+        if (html.contains("<img")) {
+          createImage(imgElements[imageIndex++].attributes['src'], widgetList,
+              onTapCallback);
+        } else {
+          widgetList.add(new HtmlText(
+            data: html,
+            onTapCallback: onTapCallback,
+          ));
+        }
+      });
   }
 
   void createImage(
