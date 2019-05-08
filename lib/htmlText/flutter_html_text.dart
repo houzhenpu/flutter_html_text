@@ -46,7 +46,7 @@ class HtmlText extends StatelessWidget {
         recognizer: TapGestureRecognizer()
           ..onTap = () {
             if (onTapCallback != null && node['href'] != '') {
-              onTapCallback(OnTapData(url: node['href'], type: OnTapType.href));
+              onTapCallback(OnTapData(node['href']));
             }
           });
     return span;

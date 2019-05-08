@@ -1,9 +1,9 @@
 class OnTapData {
-  OnTapData({this.url, this.type, this.data});
+  OnTapData(this.url, {this.type = OnTapType.href, this.data});
 
   String url;
 
-  OnTapType type = OnTapType.href;
+  OnTapType type;
 
   dynamic data;
 }

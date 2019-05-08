@@ -75,7 +75,7 @@ class HtmlParser {
     widgetList.add(new GestureDetector(
       onTap: () {
         if (onTapCallback != null) {
-          onTapCallback(OnTapData(url: imageUrl, type: OnTapType.img));
+          onTapCallback(OnTapData(imageUrl, type: OnTapType.img));
         }
       },
       child: new CachedNetworkImage(
