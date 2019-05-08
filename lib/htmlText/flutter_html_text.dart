@@ -385,7 +385,7 @@ class HtmlParser {
     if (this._spanStyle.isNotEmpty) {
       spanStyle = this._spanStyle.last.toString();
     }
-    String style = '${spanStyle}${ attrs['style']}';
+    String style = '$spanStyle${ attrs['style']}';
     String param;
     String value;
 
