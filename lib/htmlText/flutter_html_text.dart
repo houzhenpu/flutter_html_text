@@ -2,20 +2,29 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/htmlText/on_tap_data.dart';
 
+// ignore: must_be_immutable
 class HtmlText extends StatelessWidget {
   final String data;
 
   final Function onTapCallback;
 
-  HtmlText(this.data, {this.onTapCallback});
+  static const EdgeInsetsGeometry _defaultPadding =
+      EdgeInsets.only(top: 12.0, left: 0.0, right: 0.0, bottom: 12.0);
+
+  EdgeInsetsGeometry padding;
+
+  HtmlText(this.data, {this.onTapCallback, this.padding = _defaultPadding});
 
   @override
   Widget build(BuildContext context) {
     HtmlParser parser = new HtmlParser();
-    return new RichText(
-      text: this._stackToTextSpan(parser.parse(this.data), context),
-      softWrap: true,
-      textAlign: parser.textAlign,
+    return Container(
+      padding: padding,
+      child: new RichText(
+        text: this._stackToTextSpan(parser.parse(this.data), context),
+        softWrap: true,
+        textAlign: parser.textAlign,
+      ),
     );
   }
 
