@@ -32,7 +32,7 @@ class HtmlParser {
     List<dom.Element> docBodyChildren = docBody.children;
     docBodyChildren.forEach((e) {
       if (e.outerHtml.contains("<img")) {
-        analysisHtmlImage(e, widgetList, onTapCallback);
+        _analysisHtmlImage(e, widgetList, onTapCallback);
       } else if (e.outerHtml.contains("<iframe")) {
         widgetList.add(GestureDetector(
             onTap: () {
@@ -46,17 +46,21 @@ class HtmlParser {
               image: AssetImage("assets/images/video_placeholder.png"),
             )));
       } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
-        widgetList.add(new HtmlText(
-          e.outerHtml,
-          onTapCallback: onTapCallback,
-        ));
+        widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
       }
     });
 
     return widgetList;
   }
 
-  void analysisHtmlImage(
+  HtmlText _createHtmlText(String html, Function onTapCallback) {
+    return new HtmlText(
+      html,
+      onTapCallback: onTapCallback,
+    );
+  }
+
+  void _analysisHtmlImage(
       dom.Element e, List<Widget> widgetList, Function onTapCallback) {
     String outerHtml = e.outerHtml;
 
@@ -70,18 +74,15 @@ class HtmlParser {
     int imageIndex = 0;
     outerHtml.split(separator).forEach((html) {
       if (html.contains("<img")) {
-        createImage(imgElements[imageIndex++].attributes['src'], widgetList,
+        _createImage(imgElements[imageIndex++].attributes['src'], widgetList,
             onTapCallback);
       } else {
-        widgetList.add(new HtmlText(
-          html,
-          onTapCallback: onTapCallback,
-        ));
+        widgetList.add(_createHtmlText(html, onTapCallback));
       }
     });
   }
 
-  void createImage(
+  void _createImage(
       String imageUrl, List<Widget> widgetList, Function onTapCallback) {
     widgetList.add(new GestureDetector(
       onTap: () {
