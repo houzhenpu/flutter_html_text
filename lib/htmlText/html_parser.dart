@@ -1,10 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/htmlText/constants.dart';
+import 'package:flutter_app/htmlText/flutter_html_text.dart';
 import 'package:flutter_app/htmlText/on_tap_data.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
-import 'package:flutter_app/htmlText/flutter_html_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class HtmlParser {
   HtmlParser();
@@ -33,6 +33,10 @@ class HtmlParser {
     docBodyChildren.forEach((e) {
       if (e.outerHtml.contains("<img")) {
         analysisHtmlImage(e, widgetList, onTapCallback);
+      } else if (e.outerHtml.contains("<iframe")) {
+        widgetList.add(Image(
+            image: AssetImage("assets/images/video_placeholder.png"),
+        ));
       } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
         widgetList.add(new HtmlText(
           data: e.outerHtml,
@@ -56,18 +60,17 @@ class HtmlParser {
       });
     }
     int imageIndex = 0;
-    outerHtml.split(separator)
-      ..forEach((html) {
-        if (html.contains("<img")) {
-          createImage(imgElements[imageIndex++].attributes['src'], widgetList,
-              onTapCallback);
-        } else {
-          widgetList.add(new HtmlText(
-            data: html,
-            onTapCallback: onTapCallback,
-          ));
-        }
-      });
+    outerHtml.split(separator).forEach((html) {
+      if (html.contains("<img")) {
+        createImage(imgElements[imageIndex++].attributes['src'], widgetList,
+            onTapCallback);
+      } else {
+        widgetList.add(new HtmlText(
+          data: html,
+          onTapCallback: onTapCallback,
+        ));
+      }
+    });
   }
 
   void createImage(
