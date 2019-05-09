@@ -19,7 +19,6 @@ class HtmlText extends StatelessWidget {
       softWrap: true,
       textAlign: parser.textAlign,
     );
-
     return new Container(
         padding:
             const EdgeInsets.only(top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
@@ -28,11 +27,9 @@ class HtmlText extends StatelessWidget {
 
   TextSpan _stackToTextSpan(List nodes, BuildContext context) {
     List<TextSpan> children = <TextSpan>[];
-
     for (int i = 0; i < nodes.length; i++) {
       children.add(_textSpan(nodes[i]));
     }
-
     return new TextSpan(
         text: '',
         style: DefaultTextStyle.of(context).style,
@@ -53,9 +50,9 @@ class HtmlText extends StatelessWidget {
   }
 }
 
-TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-
 class HtmlParser {
+  HtmlTextStyle htmlTextStyle = new HtmlTextStyle();
+
   // Regular Expressions for parsing tags and attributes
   RegExp _startTag;
   RegExp _endTag;
@@ -194,9 +191,7 @@ class HtmlParser {
   List<String> _stack = [];
   List<String> _spanStyle = [];
   List _result = [];
-
   Map<String, dynamic> _tag;
-
   TextAlign textAlign = TextAlign.left;
 
   HtmlParser() {
@@ -220,14 +215,12 @@ class HtmlParser {
     bool isAppendStartTag = false;
     while (html.length > 0) {
       chars = true;
-
       // Make sure we're not in a script or style element
       if (this._getStackLastItem() == null ||
           !this._specialTags.contains(this._getStackLastItem())) {
         // Comment
         if (html.indexOf('<!--') == 0) {
           index = html.indexOf('-->');
-
           if (index >= 0) {
             html = html.substring(index + 3);
             chars = false;
@@ -239,7 +232,6 @@ class HtmlParser {
           match = this._endTag.firstMatch(html);
           if (match != null) {
             String tag = match[0];
-
             html = html.substring(tag.length);
             chars = false;
             this._parseEndTag(tag);
@@ -250,7 +242,6 @@ class HtmlParser {
           match = this._startTag.firstMatch(html);
           if (match != null) {
             String tag = match[0];
-
             html = html.substring(tag.length);
             chars = false;
             this._parseStartTag(
@@ -288,17 +279,13 @@ class HtmlParser {
       }
       last = html;
     }
-
     // Cleanup any remaining tags
     this._parseEndTag();
-
     List result = this._result;
-
     // Cleanup internal variables
     this._stack = [];
     this._result = [];
     this._spanStyle = [];
-
     return result;
   }
 
@@ -311,22 +298,17 @@ class HtmlParser {
         this._parseEndTag(this._getStackLastItem());
       }
     }
-
     if (this._closeSelfTags.contains(tagName) &&
         this._getStackLastItem() == tagName) {
       this._parseEndTag(tagName);
     }
-
     if (this._emptyTags.contains(tagName)) {
       unary = 1;
     }
-
     if (unary == 0) {
       this._stack.add(tagName);
     }
-
     Map attrs = {};
-
     Iterable<Match> matches = this._attr.allMatches(rest);
 
     if (matches != null) {
@@ -349,19 +331,14 @@ class HtmlParser {
         }
       }
     }
-
     this._appendTag(tagName, attrs, isAppendStartTag);
   }
 
   void _parseEndTag([String tagName]) {
     int pos;
-
-    // If no tag name is provided, clean shop
     if (tagName == null) {
       pos = 0;
-    }
-    // Find the closest opened tag of the same type
-    else {
+    } else {
       if (tagName.contains('span')) {
         this._spanStyle.removeLast();
       }
@@ -372,9 +349,7 @@ class HtmlParser {
         }
       }
     }
-
     if (pos >= 0) {
-      // Remove the open elements from the stack
       this._stack.removeRange(pos, this._stack.length);
     }
   }
@@ -385,50 +360,45 @@ class HtmlParser {
     if (this._spanStyle.isNotEmpty) {
       spanStyle = this._spanStyle.last.toString();
     }
-    String style = '$spanStyle${ attrs['style']}';
+    String style = '$spanStyle${attrs['style']}';
     String param;
     String value;
 
-    double fontSize = 0.0;
-    Color color = new Color(0xFF000000);
     FontWeight fontWeight = FontWeight.normal;
     FontStyle fontStyle = FontStyle.normal;
     TextDecoration textDecoration = TextDecoration.none;
     tags.forEach((tag) {
       switch (tag) {
         case 'h1':
-          fontSize = 32.0;
+          htmlTextStyle.fontSize = 32.0;
           break;
         case 'h2':
-          fontSize = 24.0;
+          htmlTextStyle.fontSize = 24.0;
           break;
         case 'h3':
-          fontSize = 20.8;
+          htmlTextStyle.fontSize = 20.8;
           break;
         case 'h4':
-          fontSize = 16.0;
+          htmlTextStyle.fontSize = 16.0;
           break;
         case 'h5':
-          fontSize = 12.8;
+          htmlTextStyle.fontSize = 12.8;
           break;
         case 'h6':
-          fontSize = 11.2;
+          htmlTextStyle.fontSize = 11.2;
           break;
         case 'a':
-          //textDecoration = TextDecoration.underline;
-          color = new Color(int.parse('0xFF5193ad'));
+          textDecoration = htmlTextStyle.hrefTextDecoration;
+          htmlTextStyle.color = new Color(int.parse('0xFF5193ad'));
           break;
-
         case 'b':
         case 'strong':
           fontWeight = FontWeight.bold;
           break;
-
         case 'i':
         case 'em':
           fontStyle = FontStyle.italic;
           break;
-
         case 'u':
           textDecoration = TextDecoration.underline;
           break;
@@ -445,30 +415,22 @@ class HtmlParser {
           case 'color':
             if (this._color.hasMatch(value)) {
               value = value.replaceAll('#', '').trim();
-              color = new Color(int.parse('0xFF' + value));
+              htmlTextStyle.color = new Color(int.parse('0xFF' + value));
             }
-
             break;
-
           case 'font-weight':
             fontWeight =
                 (value == 'bold') ? FontWeight.bold : FontWeight.normal;
-
             break;
-
           case 'font-style':
             fontStyle =
                 (value == 'italic') ? FontStyle.italic : FontStyle.normal;
-
             break;
-
           case 'text-decoration':
             textDecoration = (value == 'underline')
                 ? TextDecoration.underline
                 : TextDecoration.none;
-
             break;
-
           case 'text-align':
             if (value.endsWith('center')) {
               textAlign = TextAlign.center;
@@ -477,34 +439,18 @@ class HtmlParser {
             } else {
               textAlign = TextAlign.left;
             }
-
             break;
         }
       }
     }
-
-    TextStyle textStyle;
-
-    if (fontSize != 0.0) {
-      textStyle = new TextStyle(
-        color: color,
-        fontWeight: fontWeight,
-        fontStyle: fontStyle,
-        decoration: textDecoration,
-        fontSize: fontSize,
-        height: 1.2,
-      );
-    } else {
-      textStyle = new TextStyle(
-        color: color,
-        fontWeight: fontWeight,
-        fontStyle: fontStyle,
-        decoration: textDecoration,
-        height: 1.2,
-      );
-    }
-
-    return textStyle;
+    return TextStyle(
+      color: htmlTextStyle.color,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      decoration: textDecoration,
+      fontSize: htmlTextStyle.fontSize,
+      height: htmlTextStyle.height,
+    );
   }
 
   void _appendTag(String tag, Map attrs, bool isAppendStartTag) {
@@ -546,4 +492,22 @@ class HtmlParser {
 
     return this._stack[this._stack.length - 1];
   }
+}
+
+class HtmlTextStyle {
+  double fontSize;
+
+  TextDecoration hrefTextDecoration;
+
+  double height;
+
+  Color color;
+
+  static const Color _defaultTextColor = Color(0xFF000000);
+
+  HtmlTextStyle(
+      {this.fontSize = 14.0,
+      this.hrefTextDecoration = TextDecoration.none,
+      this.height = 1.2,
+      this.color = _defaultTextColor});
 }
