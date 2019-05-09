@@ -17,17 +17,17 @@ class HtmlParser {
 
   EdgeInsetsGeometry videoPadding;
 
+  EdgeInsetsGeometry textPadding;
+
   HtmlParser(
-      {this.imagePadding = _defaultImagePadding,
+      {this.textPadding,
+      this.imagePadding = _defaultImagePadding,
       this.videoPadding = _defaultVideoPadding});
 
   List<Widget> parseHtml(String html, {Function onTapCallback}) {
     List<Widget> widgetList = new List();
-
     dom.Document document = parse(html);
-
     dom.Element docBody = document.body;
-
     List<dom.Element> styleElements = docBody.getElementsByTagName("style");
     List<dom.Element> scriptElements = docBody.getElementsByTagName("script");
     if (styleElements.length > 0) {
@@ -75,6 +75,7 @@ class HtmlParser {
   HtmlText _createHtmlText(String html, Function onTapCallback) {
     return new HtmlText(
       html,
+      padding: textPadding,
       onTapCallback: onTapCallback,
     );
   }

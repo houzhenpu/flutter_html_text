@@ -6,7 +6,7 @@ import 'package:oktoast/src/toast.dart';
 class HtmlTextView extends StatelessWidget {
   final String data;
 
-  HtmlTextView(this.data);
+  HtmlTextView(this.data, {EdgeInsetsGeometry padding});
 
   final Function onTapCallback = (data) {
     if (data is OnTapData) {
@@ -23,10 +23,12 @@ class HtmlTextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HtmlParser htmlParser = new HtmlParser();
-
-    List<Widget> nodes =
-        htmlParser.parseHtml(this.data, onTapCallback: this.onTapCallback);
+    List<Widget> nodes = HtmlParser(
+      imagePadding:
+          EdgeInsets.only(top: 12.0, left: 0.0, right: 0.0, bottom: 12.0),
+      videoPadding:
+          EdgeInsets.only(top: 12.0, left: 0.0, right: 0.0, bottom: 12.0),
+    ).parseHtml(this.data, onTapCallback: this.onTapCallback);
 
     return new Container(
         padding: const EdgeInsets.all(0.0),

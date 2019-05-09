@@ -19,7 +19,7 @@ class HtmlText extends StatelessWidget {
   Widget build(BuildContext context) {
     HtmlParser parser = new HtmlParser();
     return Container(
-      padding: padding,
+      padding: padding ?? _defaultPadding,
       child: new RichText(
         text: this._stackToTextSpan(parser.parse(this.data), context),
         softWrap: true,
