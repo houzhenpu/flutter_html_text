@@ -56,53 +56,56 @@ class SingleChildScrollViewTestRoute extends StatelessWidget {
               Text('sdfsdf'),
               Container(
                 child: new HtmlTextView(
-                  data: html,
+                  html,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: htmlUl,
+                  htmlUl,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: centerUrl,
+                  centerUrl,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: colorUrl,
+                  colorUrl,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: htmlOl,
+                  htmlOl,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: moreHtml,
+                  moreHtml,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: emStrong,
+                  emStrong,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: emStrong1,
+                  emStrong1,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: imageHtml,
+                  imageHtml,
                 ),
               ),
               Container(
                 child: new HtmlTextView(
-                  data: videoHtml,
+                  videoHtml,
                 ),
+              ),
+              Container(
+                child: HtmlTextView(''),
               ),
             ],
           ),

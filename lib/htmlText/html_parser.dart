@@ -7,7 +7,19 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
 
 class HtmlParser {
-  HtmlParser();
+  static const EdgeInsetsGeometry _defaultImagePadding =
+      EdgeInsets.only(top: 4.0, left: 0.0, right: 0.0, bottom: 8.0);
+
+  EdgeInsetsGeometry imagePadding;
+
+  static const EdgeInsetsGeometry _defaultVideoPadding =
+      EdgeInsets.only(top: 4.0, left: 0.0, right: 0.0, bottom: 8.0);
+
+  EdgeInsetsGeometry videoPadding;
+
+  HtmlParser(
+      {this.imagePadding = _defaultImagePadding,
+      this.videoPadding = _defaultVideoPadding});
 
   List<Widget> parseHtml(String html, {Function onTapCallback}) {
     List<Widget> widgetList = new List();
@@ -34,23 +46,30 @@ class HtmlParser {
       if (e.outerHtml.contains("<img")) {
         _analysisHtmlImage(e, widgetList, onTapCallback);
       } else if (e.outerHtml.contains("<iframe")) {
-        widgetList.add(GestureDetector(
-            onTap: () {
-              if (onTapCallback != null) {
-                onTapCallback(OnTapData(
-                    e.getElementsByTagName("iframe")[0].attributes['src'],
-                    type: OnTapType.video));
-              }
-            },
-            child: Image(
-              image: AssetImage("assets/images/video_placeholder.png"),
-            )));
+        widgetList.add(_createVideo(onTapCallback, e));
       } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
         widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
       }
     });
 
     return widgetList;
+  }
+
+  GestureDetector _createVideo(Function onTapCallback, dom.Element e) {
+    return GestureDetector(
+        onTap: () {
+          if (onTapCallback != null) {
+            onTapCallback(OnTapData(
+                e.getElementsByTagName("iframe")[0].attributes['src'],
+                type: OnTapType.video));
+          }
+        },
+        child: Container(
+          padding: videoPadding,
+          child: Image(
+            image: AssetImage("assets/images/video_placeholder.png"),
+          ),
+        ));
   }
 
   HtmlText _createHtmlText(String html, Function onTapCallback) {
@@ -90,11 +109,14 @@ class HtmlParser {
           onTapCallback(OnTapData(imageUrl, type: OnTapType.img));
         }
       },
-      child: new CachedNetworkImage(
-        fadeInDuration: const Duration(seconds: 2),
-        fadeOutDuration: const Duration(seconds: 1),
-        imageUrl: imageUrl,
-        fit: BoxFit.cover,
+      child: Container(
+        padding: imagePadding,
+        child: new CachedNetworkImage(
+          fadeInDuration: const Duration(seconds: 2),
+          fadeOutDuration: const Duration(seconds: 1),
+          imageUrl: imageUrl,
+          fit: BoxFit.cover,
+        ),
       ),
     ));
   }
