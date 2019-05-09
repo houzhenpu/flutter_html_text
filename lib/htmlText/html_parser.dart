@@ -9,7 +9,7 @@ import 'package:html/parser.dart' show parse;
 class HtmlParser {
   HtmlParser();
 
-  List<Widget> HParse(String html, {Function onTapCallback}) {
+  List<Widget> parseHtml(String html, {Function onTapCallback}) {
     List<Widget> widgetList = new List();
 
     dom.Document document = parse(html);

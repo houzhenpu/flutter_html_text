@@ -26,7 +26,7 @@ class HtmlTextView extends StatelessWidget {
     HtmlParser htmlParser = new HtmlParser();
 
     List<Widget> nodes =
-        htmlParser.HParse(this.data, onTapCallback: this.onTapCallback);
+        htmlParser.parseHtml(this.data, onTapCallback: this.onTapCallback);
 
     return new Container(
         padding: const EdgeInsets.all(0.0),
