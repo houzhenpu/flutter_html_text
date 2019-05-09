@@ -12,17 +12,11 @@ class HtmlText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HtmlParser parser = new HtmlParser();
-    List nodes = parser.parse(this.data);
-    TextSpan span = this._stackToTextSpan(nodes, context);
-    RichText contents = new RichText(
-      text: span,
+    return new RichText(
+      text: this._stackToTextSpan(parser.parse(this.data), context),
       softWrap: true,
       textAlign: parser.textAlign,
     );
-    return new Container(
-        padding:
-            const EdgeInsets.only(top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
-        child: contents);
   }
 
   TextSpan _stackToTextSpan(List nodes, BuildContext context) {
