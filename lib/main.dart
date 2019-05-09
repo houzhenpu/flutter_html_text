@@ -35,10 +35,11 @@ class SingleChildScrollViewTestRoute extends StatelessWidget {
       '<span style="text-decoration: underline; color: #e8451a;"><em><strong>布局空间。Flutter借鉴了很多React</strong></em></span>';
   String emStrong =
       '<p>这样<span style="text-decoration: underline;">做<span style="text-decoration: underline; color: #e8451a;">的</span><strong>好处，</strong></span><span style="text-decoration: none;"><strong><span style="text-decoration: none; color: #92cf4f;">我<em>觉</em></span></strong></span><span style="text-decoration: underline;"><strong><em>得</em><em><a href="https://www.imooc.com/article/details/id/31493" title="可能是为了" target="_blank">可能是为了</a>了统一的渲染</em></strong><strong>。加入</strong>样</span>式，会</p>';
-  String emStrong1 =
-      '<p>这样做的<strong>好处，我<em>觉得了统一的渲染</em>加粗</strong>正常</p>';
-  String imageHtml = '<p>只给出很少的定制化的东西，将布局限</p><p>定在有限的<em><strong>让布局复杂不少</strong></em>范围内<img src="https://static.moer.cn/O/2019050777599ec7c9a0f1ac7ebabb4df81377d0.jpeg?mark=1" title="2019050777599ec7c9a0f1ac7ebabb4df81377d0.jpeg" alt=""/>中间的文字<img src="https://static.moer.cn/O/20190507cf596fa2ce5d10d685e9ee5d0e81fd87.jpeg?mark=1" title="20190507cf596fa2ce5d10d685e9ee5d0e81fd87.jpeg" alt=""/>，在完成布局的同时，</p><p><img src="https://static.moer.cn/O/201905077b35e691b0332bba01bf1d1af85ee107.jpeg?mark=1" title="201905077b35e691b0332bba01bf1d1af85ee107.jpeg" alt=""/></p><p>让整个渲染能够统一，</p>';
-
+  String emStrong1 = '<p>这样做的<strong>好处，我<em>觉得了统一的渲染</em>加粗</strong>正常</p>';
+  String imageHtml =
+      '<p>只给出很少的定制化的东西，将布局限</p><p>定在有限的<em><strong>让布局复杂不少</strong></em>范围内<img src="https://static.moer.cn/O/2019050777599ec7c9a0f1ac7ebabb4df81377d0.jpeg?mark=1" title="2019050777599ec7c9a0f1ac7ebabb4df81377d0.jpeg" alt=""/>中间的文字<img src="https://static.moer.cn/O/20190507cf596fa2ce5d10d685e9ee5d0e81fd87.jpeg?mark=1" title="20190507cf596fa2ce5d10d685e9ee5d0e81fd87.jpeg" alt=""/>，在完成布局的同时，</p><p><img src="https://static.moer.cn/O/201905077b35e691b0332bba01bf1d1af85ee107.jpeg?mark=1" title="201905077b35e691b0332bba01bf1d1af85ee107.jpeg" alt=""/></p><p>让整个渲染能够统一，</p>';
+  String videoHtml =
+      '<p>加入视频开始</p><p><iframe frameborder="0" class="edui-faked-video" width="100%" height="498" src="https://player.youku.com/embed/XNDAyMjgxMDI2NA==" allowfullscreen=""></iframe></p><p>视频结束</p>';
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +97,11 @@ class SingleChildScrollViewTestRoute extends StatelessWidget {
               Container(
                 child: new HtmlTextView(
                   data: imageHtml,
+                ),
+              ),
+              Container(
+                child: new HtmlTextView(
+                  data: videoHtml,
                 ),
               ),
             ],

@@ -15,6 +15,8 @@ class HtmlTextView extends StatelessWidget {
         showToast(data.url, position: ToastPosition.bottom);
       } else if (data.type == OnTapType.img) {
         showToast(data.url, position: ToastPosition.center);
+      } else if (data.type == OnTapType.video) {
+        showToast(data.url, position: ToastPosition.bottom);
       }
     }
   };

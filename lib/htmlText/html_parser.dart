@@ -34,9 +34,17 @@ class HtmlParser {
       if (e.outerHtml.contains("<img")) {
         analysisHtmlImage(e, widgetList, onTapCallback);
       } else if (e.outerHtml.contains("<iframe")) {
-        widgetList.add(Image(
-            image: AssetImage("assets/images/video_placeholder.png"),
-        ));
+        widgetList.add(GestureDetector(
+            onTap: () {
+              if (onTapCallback != null) {
+                onTapCallback(OnTapData(
+                    e.getElementsByTagName("iframe")[0].attributes['src'],
+                    type: OnTapType.video));
+              }
+            },
+            child: Image(
+              image: AssetImage("assets/images/video_placeholder.png"),
+            )));
       } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
         widgetList.add(new HtmlText(
           data: e.outerHtml,

@@ -11,4 +11,5 @@ class OnTapData {
 enum OnTapType {
   href,
   img,
+  video,
 }
