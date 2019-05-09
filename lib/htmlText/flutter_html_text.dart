@@ -5,7 +5,7 @@ import 'package:flutter_app/htmlText/on_tap_data.dart';
 class HtmlText extends StatelessWidget {
   final String data;
 
-  HtmlText({this.data, this.onTapCallback});
+  HtmlText(this.data, {this.onTapCallback});
 
   Function onTapCallback;
 

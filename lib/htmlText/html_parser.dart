@@ -47,7 +47,7 @@ class HtmlParser {
             )));
       } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
         widgetList.add(new HtmlText(
-          data: e.outerHtml,
+          e.outerHtml,
           onTapCallback: onTapCallback,
         ));
       }
@@ -74,7 +74,7 @@ class HtmlParser {
             onTapCallback);
       } else {
         widgetList.add(new HtmlText(
-          data: html,
+          html,
           onTapCallback: onTapCallback,
         ));
       }
