@@ -8,7 +8,7 @@ class HtmlTextView extends StatelessWidget {
 
   HtmlTextView(this.data);
 
-  Function onTapCallback = (data) {
+  final Function onTapCallback = (data) {
     if (data is OnTapData) {
       print('data.type--->${data.type}');
       if (data.type == OnTapType.href) {
