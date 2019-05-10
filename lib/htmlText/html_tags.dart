@@ -125,3 +125,6 @@ final List fillAttrs = const [
 ];
 final List specialTags = const ['script', 'style'];
 
+final String ulTag = '</p></li></ul>';
+final String olTag = '</p></li></ol>';
+

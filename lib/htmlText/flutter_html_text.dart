@@ -63,8 +63,6 @@ class HtmlParser {
   RegExp _attr;
   RegExp _style;
   RegExp _color;
-  String ulTag = '</p></li></ul>';
-  String olTag = '</p></li></ol>';
 
   List<String> _stack = [];
   List<String> _spanStyle = [];
