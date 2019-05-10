@@ -28,19 +28,6 @@ class HtmlParser {
     List<Widget> widgetList = new List();
     dom.Document document = parse(html);
     dom.Element docBody = document.body;
-    List<dom.Element> styleElements = docBody.getElementsByTagName("style");
-    List<dom.Element> scriptElements = docBody.getElementsByTagName("script");
-    if (styleElements.length > 0) {
-      for (int i = 0; i < styleElements.length; i++) {
-        docBody.getElementsByTagName("style").first.remove();
-      }
-    }
-    if (scriptElements.length > 0) {
-      for (int i = 0; i < scriptElements.length; i++) {
-        docBody.getElementsByTagName("script").first.remove();
-      }
-    }
-
     List<dom.Element> docBodyChildren = docBody.children;
     docBodyChildren.forEach((e) {
       if (e.outerHtml.contains("<img")) {
@@ -51,7 +38,6 @@ class HtmlParser {
         widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
       }
     });
-
     return widgetList;
   }
 
