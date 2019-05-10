@@ -57,30 +57,11 @@ class HtmlText extends StatelessWidget {
 class HtmlParser {
   HtmlTextStyle htmlTextStyle = new HtmlTextStyle();
 
-  // Regular Expressions for parsing tags and attributes
-  RegExp _startTag;
-  RegExp _endTag;
-  RegExp _attr;
-  RegExp _style;
-  RegExp _color;
-
   List<String> _stack = [];
   List<String> _spanStyle = [];
   List _result = [];
   Map<String, dynamic> _tag;
   TextAlign textAlign = TextAlign.left;
-
-  HtmlParser() {
-    this._startTag = new RegExp(
-        r'^<([-A-Za-z0-9_]+)((?:\s+\w+(?:\s*=\s*(?:(?:"[^"]*")' +
-            "|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>");
-    this._endTag = new RegExp("^<\/([-A-Za-z0-9_]+)[^>]*>");
-    this._attr = new RegExp(
-        r'([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")' +
-            r"|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?");
-    this._style = new RegExp(r'([a-zA-Z\-]+)\s*:\s*([^;]*)');
-    this._color = new RegExp(r'^#([a-fA-F0-9]{6})$');
-  }
 
   List parse(String html) {
     String last = html;
@@ -91,31 +72,25 @@ class HtmlParser {
     bool isAppendStartTag = false;
     while (html.length > 0) {
       chars = true;
-      // Make sure we're not in a script or style element
       if (this._getStackLastItem() == null ||
           !specialTags.contains(this._getStackLastItem())) {
-        // Comment
         if (html.indexOf('<!--') == 0) {
           index = html.indexOf('-->');
           if (index >= 0) {
             html = html.substring(index + 3);
             chars = false;
           }
-        }
-        // End tag
-        else if (html.indexOf('</') == 0) {
+        } else if (html.indexOf('</') == 0) {
           isAppendStartTag = false;
-          match = this._endTag.firstMatch(html);
+          match = endTag.firstMatch(html);
           if (match != null) {
             String tag = match[0];
             html = html.substring(tag.length);
             chars = false;
             this._parseEndTag(tag);
           }
-        }
-        // Start tag
-        else if (html.indexOf('<') == 0) {
-          match = this._startTag.firstMatch(html);
+        } else if (html.indexOf('<') == 0) {
+          match = startTag.firstMatch(html);
           if (match != null) {
             String tag = match[0];
             html = html.substring(tag.length);
@@ -155,10 +130,8 @@ class HtmlParser {
       }
       last = html;
     }
-    // Cleanup any remaining tags
     this._parseEndTag();
     List result = this._result;
-    // Cleanup internal variables
     this._stack = [];
     this._result = [];
     this._spanStyle = [];
@@ -185,7 +158,7 @@ class HtmlParser {
       this._stack.add(tagName);
     }
     Map attrs = {};
-    Iterable<Match> matches = this._attr.allMatches(rest);
+    Iterable<Match> matches = attrTag.allMatches(rest);
 
     if (matches != null) {
       for (Match match in matches) {
@@ -282,14 +255,14 @@ class HtmlParser {
     });
 
     if (style != null) {
-      matches = this._style.allMatches(style);
+      matches = styleTag.allMatches(style);
 
       for (Match match in matches) {
         param = match[1].trim();
         value = match[2].trim();
         switch (param) {
           case 'color':
-            if (this._color.hasMatch(value)) {
+            if (colorTag.hasMatch(value)) {
               value = value.replaceAll('#', '').trim();
               htmlTextStyle.color = new Color(int.parse('0xFF' + value));
             }

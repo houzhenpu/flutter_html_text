@@ -128,3 +128,12 @@ final List specialTags = const ['script', 'style'];
 final String ulTag = '</p></li></ul>';
 final String olTag = '</p></li></ol>';
 
+final RegExp startTag = new RegExp(
+    r'^<([-A-Za-z0-9_]+)((?:\s+\w+(?:\s*=\s*(?:(?:"[^"]*")' +
+        "|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>");
+final RegExp endTag = new RegExp("^<\/([-A-Za-z0-9_]+)[^>]*>");
+final RegExp attrTag = new RegExp(
+    r'([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")' +
+        r"|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?");
+final RegExp styleTag = new RegExp(r'([a-zA-Z\-]+)\s*:\s*([^;]*)');
+final RegExp colorTag = new RegExp(r'^#([a-fA-F0-9]{6})$');
