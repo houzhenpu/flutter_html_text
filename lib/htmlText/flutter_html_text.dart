@@ -216,6 +216,7 @@ class HtmlParser {
     FontWeight fontWeight = FontWeight.normal;
     FontStyle fontStyle = FontStyle.normal;
     TextDecoration textDecoration = TextDecoration.none;
+    htmlTextStyle.color = HtmlTextStyle.defaultTextColor;
     tags.forEach((tag) {
       switch (tag) {
         case 'h1':
@@ -352,11 +353,11 @@ class HtmlTextStyle {
 
   Color color;
 
-  static const Color _defaultTextColor = Color(0xFF000000);
+  static const Color defaultTextColor = Color(0xFF000000);
 
   HtmlTextStyle(
       {this.fontSize = 14.0,
       this.hrefTextDecoration = TextDecoration.none,
       this.height = 1.2,
-      this.color = _defaultTextColor});
+      this.color = defaultTextColor});
 }
