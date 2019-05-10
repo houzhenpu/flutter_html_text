@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/htmlText/on_tap_data.dart';
+import 'html_tags.dart';
 
 // ignore: must_be_immutable
 class HtmlText extends StatelessWidget {
@@ -65,132 +66,6 @@ class HtmlParser {
   String ulTag = '</p></li></ul>';
   String olTag = '</p></li></ol>';
 
-  final List _emptyTags = const [
-    'area',
-    'base',
-    'basefont',
-    'br',
-    'col',
-    'frame',
-    'hr',
-    'img',
-    'input',
-    'isindex',
-    'link',
-    'meta',
-    'param',
-    'embed'
-  ];
-  final List _blockTags = const [
-    'address',
-    'applet',
-    'blockquote',
-    'button',
-    'center',
-    'dd',
-    'del',
-    'dir',
-    'div',
-    'dl',
-    'dt',
-    'fieldset',
-    'form',
-    'frameset',
-    'hr',
-    'iframe',
-    'ins',
-    'isindex',
-    'li',
-    'map',
-    'menu',
-    'noframes',
-    'noscript',
-    'object',
-    'ol',
-    'p',
-    'pre',
-    'script',
-    'table',
-    'tbody',
-    'td',
-    'tfoot',
-    'th',
-    'thead',
-    'tr',
-    'ul'
-  ];
-  final List _inlineTags = const [
-    'a',
-    'abbr',
-    'acronym',
-    'applet',
-    'b',
-    'basefont',
-    'bdo',
-    'big',
-    'br',
-    'button',
-    'cite',
-    'code',
-    'del',
-    'dfn',
-    'em',
-    'font',
-    'i',
-    'iframe',
-    'img',
-    'input',
-    'ins',
-    'kbd',
-    'label',
-    'map',
-    'object',
-    'q',
-    's',
-    'samp',
-    'script',
-    'select',
-    'small',
-    'span',
-    'strike',
-    'strong',
-    'sub',
-    'sup',
-    'textarea',
-    'tt',
-    'u',
-    'var'
-  ];
-  final List _closeSelfTags = const [
-    'colgroup',
-    'dd',
-    'dt',
-    'li',
-    'options',
-    'p',
-    'td',
-    'tfoot',
-    'th',
-    'thead',
-    'tr'
-  ];
-  final List _fillAttrs = const [
-    'checked',
-    'compact',
-    'declare',
-    'defer',
-    'disabled',
-    'ismap',
-    'multiple',
-    'nohref',
-    'noresize',
-    'noshade',
-    'nowrap',
-    'readonly',
-    'selected'
-  ];
-  final List _specialTags = const ['script', 'style'];
-
   List<String> _stack = [];
   List<String> _spanStyle = [];
   List _result = [];
@@ -220,7 +95,7 @@ class HtmlParser {
       chars = true;
       // Make sure we're not in a script or style element
       if (this._getStackLastItem() == null ||
-          !this._specialTags.contains(this._getStackLastItem())) {
+          !specialTags.contains(this._getStackLastItem())) {
         // Comment
         if (html.indexOf('<!--') == 0) {
           index = html.indexOf('-->');
@@ -295,17 +170,17 @@ class HtmlParser {
   void _parseStartTag(String tag, String tagName, String rest, int unary,
       bool isAppendStartTag) {
     tagName = tagName.toLowerCase();
-    if (this._blockTags.contains(tagName)) {
+    if (blockTags.contains(tagName)) {
       while (this._getStackLastItem() != null &&
-          this._inlineTags.contains(this._getStackLastItem())) {
+          inlineTags.contains(this._getStackLastItem())) {
         this._parseEndTag(this._getStackLastItem());
       }
     }
-    if (this._closeSelfTags.contains(tagName) &&
+    if (closeSelfTags.contains(tagName) &&
         this._getStackLastItem() == tagName) {
       this._parseEndTag(tagName);
     }
-    if (this._emptyTags.contains(tagName)) {
+    if (emptyTags.contains(tagName)) {
       unary = 1;
     }
     if (unary == 0) {
@@ -325,7 +200,7 @@ class HtmlParser {
           value = match[3];
         } else if (match[4] != null) {
           value = match[4];
-        } else if (this._fillAttrs.contains(attribute) != null) {
+        } else if (fillAttrs.contains(attribute) != null) {
           value = attribute;
         }
         attrs[attribute] = value;
