@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/htmlText/on_tap_data.dart';
+import 'constants.dart';
 import 'html_tags.dart';
 import 'package:flutter_app/htmlText/html_text_style.dart';
 
@@ -26,14 +27,14 @@ class HtmlText extends StatelessWidget {
 
     return Container(
       padding: padding ?? _defaultPadding,
-      child: this.data.startsWith('<blockquote>')
+      child: this.data.startsWith(blockQuote)
           ? createBlockQuote(parser, context)
           : _createRichText(parser, context),
     );
   }
 
   Stack createBlockQuote(HtmlParser parser, BuildContext context) {
-    this.data = this.data.replaceAll("</p><p>", '\n');
+    this.data = this.data.replaceAll(endStartPTag, lineBreakTag);
     return Stack(
       fit: StackFit.loose,
       children: <Widget>[
@@ -145,9 +146,9 @@ class HtmlParser {
           String text = (index < 0) ? html : html.substring(0, index);
           html = (index < 0) ? '' : html.substring(index);
           if (html.contains(ulTag)) {
-            text = '• ' + text + '\n';
+            text = '• ' + text + lineBreakTag;
           } else if (html.contains(olTag)) {
-            text = tagIndex.toString() + '. ' + text + '\n';
+            text = tagIndex.toString() + '. ' + text + lineBreakTag;
           }
           tagIndex++;
           this._appendNode(text);
