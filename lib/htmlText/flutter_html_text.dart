@@ -6,7 +6,7 @@ import 'package:flutter_app/htmlText/html_text_style.dart';
 
 // ignore: must_be_immutable
 class HtmlText extends StatelessWidget {
-  final String data;
+  String data;
 
   final Function onTapCallback;
 
@@ -33,6 +33,7 @@ class HtmlText extends StatelessWidget {
   }
 
   Stack createBlockQuote(HtmlParser parser, BuildContext context) {
+    this.data = this.data.replaceAll("</p><p>", '\n');
     return Stack(
       fit: StackFit.loose,
       children: <Widget>[
