@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/htmlText/on_tap_data.dart';
 import 'html_tags.dart';
+import 'package:flutter_app/htmlText/html_text_style.dart';
 
 // ignore: must_be_immutable
 class HtmlText extends StatelessWidget {
@@ -224,7 +225,7 @@ class HtmlParser {
     FontWeight fontWeight = FontWeight.normal;
     FontStyle fontStyle = FontStyle.normal;
     TextDecoration textDecoration = TextDecoration.none;
-    htmlTextStyle.color = HtmlTextStyle.defaultTextColor;
+    htmlTextStyle.color = htmlTextStyle.defaultTextColor;
     tags.forEach((tag) {
       switch (tag) {
         case 'h1':
@@ -350,22 +351,4 @@ class HtmlParser {
 
     return this._stack[this._stack.length - 1];
   }
-}
-
-class HtmlTextStyle {
-  double fontSize;
-
-  TextDecoration hrefTextDecoration;
-
-  double height;
-
-  Color color;
-
-  static const Color defaultTextColor = Color(0xFF000000);
-
-  HtmlTextStyle(
-      {this.fontSize = 14.0,
-      this.hrefTextDecoration = TextDecoration.none,
-      this.height = 1.2,
-      this.color = defaultTextColor});
 }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/htmlText/constants.dart';
 import 'package:flutter_app/htmlText/flutter_html_text.dart';
+import 'package:flutter_app/htmlText/html_text_style.dart';
 import 'package:flutter_app/htmlText/on_tap_data.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
@@ -19,10 +20,13 @@ class HtmlParser {
 
   EdgeInsetsGeometry textPadding;
 
+  HtmlTextStyle htmlTextStyle;
+
   HtmlParser(
       {this.textPadding,
       this.imagePadding = _defaultImagePadding,
-      this.videoPadding = _defaultVideoPadding});
+      this.videoPadding = _defaultVideoPadding,
+      this.htmlTextStyle});
 
   List<Widget> parseHtml(String html, {Function onTapCallback}) {
     List<Widget> widgetList = new List();
@@ -62,6 +66,7 @@ class HtmlParser {
     return new HtmlText(
       html,
       padding: textPadding,
+      htmlTextStyle: htmlTextStyle,
       onTapCallback: onTapCallback,
     );
   }

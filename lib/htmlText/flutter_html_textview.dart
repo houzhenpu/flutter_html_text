@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/htmlText/html_parser.dart';
+import 'package:flutter_app/htmlText/html_text_style.dart';
 import 'package:flutter_app/htmlText/on_tap_data.dart';
 import 'package:oktoast/src/toast.dart';
 
@@ -24,11 +25,16 @@ class HtmlTextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> nodes = HtmlParser(
-      textPadding: EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 12.0),
+      textPadding:
+          EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 12.0),
       imagePadding:
           EdgeInsets.only(top: 12.0, left: 0.0, right: 0.0, bottom: 12.0),
       videoPadding:
           EdgeInsets.only(top: 12.0, left: 0.0, right: 0.0, bottom: 12.0),
+      htmlTextStyle: HtmlTextStyle(
+          fontSize: 19,
+          hrefTextDecoration: TextDecoration.underline,
+          height: 1.5),
     ).parseHtml(this.data, onTapCallback: this.onTapCallback);
 
     return new Container(
