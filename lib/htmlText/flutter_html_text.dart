@@ -14,11 +14,14 @@ class HtmlText extends StatelessWidget {
 
   EdgeInsetsGeometry padding;
 
-  HtmlText(this.data, {this.onTapCallback, this.padding = _defaultPadding});
+  HtmlTextStyle htmlTextStyle;
+
+  HtmlText(this.data,
+      {this.onTapCallback, this.padding = _defaultPadding, this.htmlTextStyle});
 
   @override
   Widget build(BuildContext context) {
-    HtmlParser parser = new HtmlParser();
+    HtmlParser parser = new HtmlParser(htmlTextStyle: this.htmlTextStyle);
     return Container(
       padding: padding ?? _defaultPadding,
       child: new RichText(
@@ -55,7 +58,9 @@ class HtmlText extends StatelessWidget {
 }
 
 class HtmlParser {
-  HtmlTextStyle htmlTextStyle = new HtmlTextStyle();
+  HtmlTextStyle htmlTextStyle;
+
+  HtmlParser({this.htmlTextStyle});
 
   List<String> _stack = [];
   List<String> _spanStyle = [];
@@ -70,6 +75,9 @@ class HtmlParser {
     bool chars;
     int tagIndex = 1;
     bool isAppendStartTag = false;
+    if (htmlTextStyle == null) {
+      htmlTextStyle = HtmlTextStyle();
+    }
     while (html.length > 0) {
       chars = true;
       if (this._getStackLastItem() == null ||
