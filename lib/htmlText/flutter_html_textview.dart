@@ -32,9 +32,9 @@ class HtmlTextView extends StatelessWidget {
       videoPadding:
           EdgeInsets.only(top: 12.0, left: 0.0, right: 0.0, bottom: 12.0),
       htmlTextStyle: HtmlTextStyle(
-          fontSize: 19,
-          hrefTextDecoration: TextDecoration.underline,
-          height: 1.5),
+        hrefTextDecoration: TextDecoration.underline,
+        height: 1.4,
+      ),
     ).parseHtml(this.data, onTapCallback: this.onTapCallback);
 
     return new Container(

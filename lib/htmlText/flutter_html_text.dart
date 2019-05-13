@@ -23,13 +23,42 @@ class HtmlText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HtmlParser parser = new HtmlParser(htmlTextStyle: this.htmlTextStyle);
+
     return Container(
       padding: padding ?? _defaultPadding,
-      child: new RichText(
-        text: this._stackToTextSpan(parser.parse(this.data), context),
-        softWrap: true,
-        textAlign: parser.textAlign,
-      ),
+      child: this.data.startsWith('<blockquote>')
+          ? createBlockQuote(parser, context)
+          : _createRichText(parser, context),
+    );
+  }
+
+  Stack createBlockQuote(HtmlParser parser, BuildContext context) {
+    return Stack(
+      fit: StackFit.loose,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 15),
+          child: _createRichText(parser, context),
+        ),
+        Positioned(
+          top: 1,
+          bottom: 1,
+          child: Container(
+            color: Colors.tealAccent,
+            width: 3,
+            alignment: Alignment.topLeft,
+            margin: EdgeInsets.only(left: 3, right: 12),
+          ),
+        ),
+      ],
+    );
+  }
+
+  RichText _createRichText(HtmlParser parser, BuildContext context) {
+    return RichText(
+      text: this._stackToTextSpan(parser.parse(this.data), context),
+      softWrap: true,
+      textAlign: parser.textAlign,
     );
   }
 
