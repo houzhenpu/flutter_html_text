@@ -182,7 +182,9 @@ class HtmlParser {
     this._tag = null;
     _appendTag('${htmlTextStyle.digitalFontWeight}',
         {'style': 'font-size:${htmlTextStyle.digitalFontSize}'}, false);
-    this._appendNode(tagIndex.toString() + '. ');
+
+    this._appendNode(
+        '${htmlTextStyle.pointPrefix ?? ""}' + tagIndex.toString() + '. ');
     text = text + lineBreakTag;
     return text;
   }
@@ -191,7 +193,7 @@ class HtmlParser {
     this._tag = null;
     _appendTag(
         'w900', {'style': 'font-size:${htmlTextStyle.pointFontSize}'}, false);
-    this._appendNode('• ');
+    this._appendNode('${htmlTextStyle.pointPrefix ?? ""}• ');
     text = text + lineBreakTag;
     return text;
   }

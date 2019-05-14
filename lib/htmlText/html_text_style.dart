@@ -19,6 +19,10 @@ class HtmlTextStyle {
 
   String digitalFontWeight;
 
+  String digitalPrefix;
+
+  String pointPrefix;
+
   HtmlTextStyle(
       {this.fontSize = 14.0,
       this.hrefTextDecoration = TextDecoration.none,
@@ -26,13 +30,11 @@ class HtmlTextStyle {
       this.defaultTextColor,
       this.digitalFontSize = 14.0,
       this.pointFontSize = 14.0,
-      this.digitalFontWeight});
+      this.digitalFontWeight,
+      this.digitalPrefix,
+      this.pointPrefix});
 }
 
 class DigitalFontWeight {
-
   static const String strong = 'strong';
-
 }
-
-

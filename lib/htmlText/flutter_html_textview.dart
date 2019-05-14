@@ -36,6 +36,8 @@ class HtmlTextView extends StatelessWidget {
         height: 1.4,
         fontSize: 15,
         digitalFontWeight: DigitalFontWeight.strong,
+        digitalPrefix: '    ',
+        pointPrefix: '    ',
       ),
     ).parseHtml(this.data, onTapCallback: this.onTapCallback);
 
