@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/htmlText/constants.dart';
 import 'package:flutter_app/htmlText/flutter_html_text.dart';
