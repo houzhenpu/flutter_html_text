@@ -107,7 +107,9 @@ class HtmlParser {
           padding: imagePadding,
           child: new CachedNetworkImage(
             placeholder: (context, url) => new CircularProgressIndicator(),
-            errorWidget: (context, url, error) => new Icon(Icons.error),
+            errorWidget: (context, url, error) => Image(
+              image: AssetImage("assets/images/image_error.png"),
+            ),
             fadeInDuration: const Duration(seconds: 2),
             fadeOutDuration: const Duration(seconds: 1),
             imageUrl: imageUrl,
