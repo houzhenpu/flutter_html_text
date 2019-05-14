@@ -40,7 +40,7 @@ class HtmlParser {
           _analysisHtmlImage(e, widgetList, onTapCallback);
         } else if (e.outerHtml.contains("<iframe")) {
           widgetList.add(_createVideo(onTapCallback, e));
-        } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
+        } else if (e.hasContent()) {
           widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
         }
       });
