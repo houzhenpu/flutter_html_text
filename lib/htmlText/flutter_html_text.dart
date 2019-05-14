@@ -180,7 +180,8 @@ class HtmlParser {
 
   String _createDigitalTags(int tagIndex, String text) {
     this._tag = null;
-    _appendTag('strong', {'style': 'font-size:19'}, false);
+    _appendTag('${htmlTextStyle.digitalFontWeight}',
+        {'style': 'font-size:${htmlTextStyle.digitalFontSize}'}, false);
     this._appendNode(tagIndex.toString() + '. ');
     text = text + lineBreakTag;
     return text;
@@ -188,7 +189,8 @@ class HtmlParser {
 
   String _createPointTags(String text) {
     this._tag = null;
-    _appendTag('strong', {'style': 'font-size:14'}, false);
+    _appendTag(
+        'w900', {'style': 'font-size:${htmlTextStyle.pointFontSize}'}, false);
     this._appendNode('• ');
     text = text + lineBreakTag;
     return text;
@@ -302,6 +304,9 @@ class HtmlParser {
         case 'b':
         case 'strong':
           fontWeight = FontWeight.bold;
+          break;
+        case 'w900':
+          fontWeight = FontWeight.w900;
           break;
         case 'i':
         case 'em':
