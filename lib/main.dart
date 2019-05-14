@@ -124,6 +124,9 @@ class SingleChildScrollViewTestRoute extends StatelessWidget {
               Container(
                 child: HtmlTextView(backgroundHtml),
               ),
+            Container(
+              child: HtmlTextView('测试'),
+            ),
             ],
           ),
       ),

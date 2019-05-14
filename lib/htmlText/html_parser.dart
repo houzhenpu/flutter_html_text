@@ -33,16 +33,21 @@ class HtmlParser {
     dom.Document document = parse(html);
     dom.Element docBody = document.body;
     List<dom.Element> docBodyChildren = docBody.children;
-    docBodyChildren.forEach((e) {
-      if (e.outerHtml.contains("<img")) {
-        _analysisHtmlImage(e, widgetList, onTapCallback);
-      } else if (e.outerHtml.contains("<iframe")) {
-        widgetList.add(_createVideo(onTapCallback, e));
-      } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
-        print('e.outerHtml-->${e.outerHtml}');
-        widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
-      }
-    });
+    if (docBodyChildren.length == 0) {
+      widgetList.add(Text(html));
+    } else {
+      docBodyChildren.forEach((e) {
+        if (e.outerHtml.contains("<img")) {
+          _analysisHtmlImage(e, widgetList, onTapCallback);
+        } else if (e.outerHtml.contains("<iframe")) {
+          widgetList.add(_createVideo(onTapCallback, e));
+        } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
+          print('e.outerHtml-->${e.outerHtml}');
+          widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
+        }
+      });
+    }
+
     return widgetList;
   }
 
