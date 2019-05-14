@@ -7,6 +7,8 @@ import 'package:flutter_app/htmlText/on_tap_data.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
 
+import 'network_image.dart';
+
 class HtmlParser {
   static const EdgeInsetsGeometry _defaultImagePadding =
       EdgeInsets.only(top: 4.0, left: 0.0, right: 0.0, bottom: 8.0);
@@ -105,16 +107,7 @@ class HtmlParser {
       child: Center(
         child: Container(
           padding: imagePadding,
-          child: new CachedNetworkImage(
-            placeholder: (context, url) => new CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Image(
-              image: AssetImage("assets/images/image_error.png"),
-            ),
-            fadeInDuration: const Duration(seconds: 2),
-            fadeOutDuration: const Duration(seconds: 1),
-            imageUrl: imageUrl,
-            fit: BoxFit.cover,
-          ),
+          child: createCachedNetworkImage(imageUrl),
         ),
       ),
     ));
