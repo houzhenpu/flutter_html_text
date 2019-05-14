@@ -295,7 +295,7 @@ class HtmlParser {
           break;
         case 'a':
           textDecoration = htmlTextStyle.hrefTextDecoration;
-          htmlTextStyle.color = new Color(int.parse('0xFF5193ad'));
+          htmlTextStyle.color = htmlTextStyle.hrefTextColor;
           break;
         case 'b':
         case 'strong':

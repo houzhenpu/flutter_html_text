@@ -7,6 +7,10 @@ class HtmlTextStyle {
 
   TextDecoration hrefTextDecoration;
 
+  Color hrefTextColor;
+
+  static const Color defaultHrefTextColor = Color(0xFF5193ad);
+
   double height;
 
   Color color;
@@ -18,7 +22,7 @@ class HtmlTextStyle {
   EdgeInsetsGeometry padding;
 
   static const EdgeInsetsGeometry defaultPadding =
-  EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 4.0);
+      EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 4.0);
 
   double digitalFontSize = 14.0;
 
@@ -49,6 +53,7 @@ class HtmlTextStyle {
   HtmlTextStyle({
     this.fontSize = 14.0,
     this.hrefTextDecoration = TextDecoration.none,
+    this.hrefTextColor = defaultHrefTextColor,
     this.height = 1.2,
     this.defaultTextColor,
     this.digitalFontSize = 14.0,
