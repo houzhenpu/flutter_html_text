@@ -42,7 +42,6 @@ class HtmlParser {
         } else if (e.outerHtml.contains("<iframe")) {
           widgetList.add(_createVideo(onTapCallback, e));
         } else if (!e.outerHtml.contains("<img") || !e.hasContent()) {
-          print('e.outerHtml-->${e.outerHtml}');
           widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
         }
       });

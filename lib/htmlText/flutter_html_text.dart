@@ -146,9 +146,9 @@ class HtmlParser {
           String text = (index < 0) ? html : html.substring(0, index);
           html = (index < 0) ? '' : html.substring(index);
           if (html.contains(ulTag)) {
-            text = '• ' + text + lineBreakTag;
+            text = _createPointTags(text);
           } else if (html.contains(olTag)) {
-            text = tagIndex.toString() + '. ' + text + lineBreakTag;
+            text = _createDigitalTags(tagIndex, text);
           }
           tagIndex++;
           this._appendNode(text);
@@ -176,6 +176,22 @@ class HtmlParser {
     this._result = [];
     this._spanStyle = [];
     return result;
+  }
+
+  String _createDigitalTags(int tagIndex, String text) {
+    this._tag = null;
+    _appendTag('strong', {'style': 'font-size:19'}, false);
+    this._appendNode(tagIndex.toString() + '. ');
+    text = text + lineBreakTag;
+    return text;
+  }
+
+  String _createPointTags(String text) {
+    this._tag = null;
+    _appendTag('strong', {'style': 'font-size:14'}, false);
+    this._appendNode('• ');
+    text = text + lineBreakTag;
+    return text;
   }
 
   void _parseStartTag(String tag, String tagName, String rest, int unary,
@@ -258,6 +274,7 @@ class HtmlParser {
     TextDecoration textDecoration = TextDecoration.none;
     Color backgroundColor;
     htmlTextStyle.color = htmlTextStyle.defaultTextColor;
+    htmlTextStyle.fontSize = htmlTextStyle.defaultFontSize;
     tags.forEach((tag) {
       switch (tag) {
         case 'h1':
@@ -336,6 +353,9 @@ class HtmlParser {
               value = value.replaceAll('#', '').trim();
               backgroundColor = new Color(int.parse('0xFF' + value));
             }
+            break;
+          case 'font-size':
+            htmlTextStyle.fontSize = double.parse(value);
             break;
         }
       }

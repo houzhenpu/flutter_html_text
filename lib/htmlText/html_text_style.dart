@@ -11,6 +11,8 @@ class HtmlTextStyle {
 
   Color defaultTextColor = Color(0xFF000000);
 
+  double defaultFontSize = 14.0;
+
   HtmlTextStyle(
       {this.fontSize = 14.0,
       this.hrefTextDecoration = TextDecoration.none,

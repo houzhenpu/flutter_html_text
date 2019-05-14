@@ -34,6 +34,7 @@ class HtmlTextView extends StatelessWidget {
       htmlTextStyle: HtmlTextStyle(
         hrefTextDecoration: TextDecoration.underline,
         height: 1.4,
+        fontSize: 15,
       ),
     ).parseHtml(this.data, onTapCallback: this.onTapCallback);
 
