@@ -102,13 +102,17 @@ class HtmlParser {
           onTapCallback(OnTapData(imageUrl, type: OnTapType.img));
         }
       },
-      child: Container(
-        padding: imagePadding,
-        child: new CachedNetworkImage(
-          fadeInDuration: const Duration(seconds: 2),
-          fadeOutDuration: const Duration(seconds: 1),
-          imageUrl: imageUrl,
-          fit: BoxFit.cover,
+      child: Center(
+        child: Container(
+          padding: imagePadding,
+          child: new CachedNetworkImage(
+            placeholder: (context, url) => new CircularProgressIndicator(),
+            errorWidget: (context, url, error) => new Icon(Icons.error),
+            fadeInDuration: const Duration(seconds: 2),
+            fadeOutDuration: const Duration(seconds: 1),
+            imageUrl: imageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     ));
