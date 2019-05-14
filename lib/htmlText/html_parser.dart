@@ -18,13 +18,10 @@ class HtmlParser {
 
   EdgeInsetsGeometry videoPadding;
 
-  EdgeInsetsGeometry textPadding;
-
   HtmlTextStyle htmlTextStyle;
 
   HtmlParser(
-      {this.textPadding,
-      this.imagePadding = _defaultImagePadding,
+      {this.imagePadding = _defaultImagePadding,
       this.videoPadding = _defaultVideoPadding,
       this.htmlTextStyle});
 
@@ -70,7 +67,6 @@ class HtmlParser {
   HtmlText _createHtmlText(String html, Function onTapCallback) {
     return new HtmlText(
       html,
-      padding: textPadding,
       htmlTextStyle: htmlTextStyle,
       onTapCallback: onTapCallback,
     );

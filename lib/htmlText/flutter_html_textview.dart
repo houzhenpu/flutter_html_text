@@ -25,8 +25,6 @@ class HtmlTextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> nodes = HtmlParser(
-      textPadding:
-          EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 12.0),
       imagePadding:
           EdgeInsets.only(top: 12.0, left: 0.0, right: 0.0, bottom: 12.0),
       videoPadding:
@@ -35,6 +33,7 @@ class HtmlTextView extends StatelessWidget {
         hrefTextDecoration: TextDecoration.underline,
         height: 1.4,
         fontSize: 15,
+        padding: EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 12.0),
         digitalFontWeight: DigitalFontWeight.strong,
         digitalPrefix: '    ',
         pointPrefix: '    ',

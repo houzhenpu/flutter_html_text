@@ -11,22 +11,16 @@ class HtmlText extends StatelessWidget {
 
   final Function onTapCallback;
 
-  static const EdgeInsetsGeometry _defaultPadding =
-      EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 4.0);
-
-  EdgeInsetsGeometry padding;
-
   HtmlTextStyle htmlTextStyle;
 
-  HtmlText(this.data,
-      {this.onTapCallback, this.padding = _defaultPadding, this.htmlTextStyle});
+  HtmlText(this.data, {this.onTapCallback, this.htmlTextStyle});
 
   @override
   Widget build(BuildContext context) {
     HtmlParser parser = new HtmlParser(htmlTextStyle: this.htmlTextStyle);
 
     return Container(
-      padding: padding ?? _defaultPadding,
+      padding: htmlTextStyle.padding,
       child: this.data.startsWith(blockQuote)
           ? createBlockQuote(parser, context)
           : _createRichText(parser, context),

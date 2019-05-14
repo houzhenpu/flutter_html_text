@@ -15,6 +15,11 @@ class HtmlTextStyle {
 
   double defaultFontSize = 14.0;
 
+  EdgeInsetsGeometry padding;
+
+  static const EdgeInsetsGeometry defaultPadding =
+  EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 4.0);
+
   double digitalFontSize = 14.0;
 
   double pointFontSize = 14.0;
@@ -55,6 +60,7 @@ class HtmlTextStyle {
     this.blockQuoteWidth = 3,
     this.blockQuotMargin = defaultBlockQuotMargin,
     this.blockQuotTextMargin = defaultBlockQuotTextMargin,
+    this.padding = defaultPadding,
   });
 }
 
