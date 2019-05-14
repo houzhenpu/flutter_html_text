@@ -98,21 +98,21 @@ class HtmlParser {
     String last = html;
     Match match;
     int index;
-    bool chars;
+    bool isTextPart;
     int tagIndex = 1;
     bool isAppendStartTag = false;
     if (htmlTextStyle == null) {
       htmlTextStyle = HtmlTextStyle();
     }
     while (html.length > 0) {
-      chars = true;
+      isTextPart = true;
       if (this._getStackLastItem() == null ||
           !specialTags.contains(this._getStackLastItem())) {
         if (html.indexOf('<!--') == 0) {
           index = html.indexOf('-->');
           if (index >= 0) {
             html = html.substring(index + 3);
-            chars = false;
+            isTextPart = false;
           }
         } else if (html.indexOf('</') == 0) {
           isAppendStartTag = false;
@@ -120,7 +120,7 @@ class HtmlParser {
           if (match != null) {
             String tag = match[0];
             html = html.substring(tag.length);
-            chars = false;
+            isTextPart = false;
             this._parseEndTag(tag);
           }
         } else if (html.indexOf('<') == 0) {
@@ -128,14 +128,13 @@ class HtmlParser {
           if (match != null) {
             String tag = match[0];
             html = html.substring(tag.length);
-            chars = false;
+            isTextPart = false;
             this._parseStartTag(
                 tag, match[1], match[2], match.start, isAppendStartTag);
             isAppendStartTag = true;
           }
         }
-
-        if (chars) {
+        if (isTextPart) {
           index = html.indexOf('<');
           String text = (index < 0) ? html : html.substring(0, index);
           html = (index < 0) ? '' : html.substring(index);
