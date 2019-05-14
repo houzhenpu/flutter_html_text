@@ -256,6 +256,7 @@ class HtmlParser {
     FontWeight fontWeight = FontWeight.normal;
     FontStyle fontStyle = FontStyle.normal;
     TextDecoration textDecoration = TextDecoration.none;
+    Color backgroundColor;
     htmlTextStyle.color = htmlTextStyle.defaultTextColor;
     tags.forEach((tag) {
       switch (tag) {
@@ -330,6 +331,12 @@ class HtmlParser {
               textAlign = TextAlign.left;
             }
             break;
+          case 'background-color':
+            if (colorTag.hasMatch(value)) {
+              value = value.replaceAll('#', '').trim();
+              backgroundColor = new Color(int.parse('0xFF' + value));
+            }
+            break;
         }
       }
     }
@@ -340,6 +347,7 @@ class HtmlParser {
       decoration: textDecoration,
       fontSize: htmlTextStyle.fontSize,
       height: htmlTextStyle.height,
+      backgroundColor: backgroundColor,
     );
   }
 
