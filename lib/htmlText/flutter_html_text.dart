@@ -39,17 +39,17 @@ class HtmlText extends StatelessWidget {
       fit: StackFit.loose,
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(left: 15),
+          margin: htmlTextStyle.blockQuotTextMargin,
           child: _createRichText(parser, context),
         ),
         Positioned(
           top: 1,
           bottom: 1,
           child: Container(
-            color: Colors.tealAccent,
-            width: 3,
+            color: htmlTextStyle.blockQuoteColor,
+            width: htmlTextStyle.blockQuoteWidth,
             alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 3, right: 12),
+            margin: htmlTextStyle.blockQuotMargin,
           ),
         ),
       ],

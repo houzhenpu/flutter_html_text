@@ -38,6 +38,10 @@ class HtmlTextView extends StatelessWidget {
         digitalFontWeight: DigitalFontWeight.strong,
         digitalPrefix: '    ',
         pointPrefix: '    ',
+        blockQuoteColor: Colors.teal,
+        blockQuoteWidth: 5,
+        blockQuotMargin: EdgeInsets.only(left: 10, right: 10),
+        blockQuotTextMargin: EdgeInsets.only(left: 25),
       ),
     ).parseHtml(this.data, onTapCallback: this.onTapCallback);
 
