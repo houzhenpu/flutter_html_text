@@ -37,9 +37,7 @@ class HtmlParser {
 
   List<Widget> parseHtml(String html, {Function onTapCallback}) {
     List<Widget> widgetList = new List();
-    dom.Document document = parse(html);
-    dom.Element docBody = document.body;
-    List<dom.Element> docBodyChildren = docBody.children;
+    List<dom.Element> docBodyChildren = parse(html).body.children;
     if (docBodyChildren.length == 0) {
       widgetList.add(Text(html));
     } else {
