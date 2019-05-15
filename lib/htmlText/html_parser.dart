@@ -28,10 +28,10 @@ class HtmlParser {
 
   Future<List<Widget>> parseHtmlToAsync(String html,
       {Function onTapCallback}) async {
-    return await getWidget(html, onTapCallback: onTapCallback);
+    return await _getWidgetFromHtml(html, onTapCallback: onTapCallback);
   }
 
-  Future<List<Widget>> getWidget(String html, {Function onTapCallback}) async {
+  Future<List<Widget>> _getWidgetFromHtml(String html, {Function onTapCallback}) async {
     return parseHtml(html, onTapCallback: onTapCallback);
   }
 
