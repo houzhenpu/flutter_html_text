@@ -54,7 +54,7 @@ class HtmlTextStyle {
     this.fontSize = 14.0,
     this.hrefTextDecoration = TextDecoration.none,
     this.hrefTextColor = defaultHrefTextColor,
-    this.height = 1.2,
+    this.height = 1.4,
     this.defaultTextColor,
     this.digitalFontSize = 14.0,
     this.pointFontSize = 14.0,
