@@ -26,6 +26,29 @@ class HtmlParser {
       this.videoPadding = _defaultVideoPadding,
       this.htmlTextStyle});
 
+  Future<List<Widget>> parseHtmlToAsync(String html, {Function onTapCallback}) async {
+    return await getWidget(html, onTapCallback: onTapCallback);
+  }
+
+  Future<List<Widget>> getWidget(String html, {Function onTapCallback}) async {
+    List<Widget> widgetList = new List();
+    List<dom.Element> docBodyChildren = parse(html).body.children;
+    if (docBodyChildren.length == 0) {
+      widgetList.add(Text(html));
+    } else {
+      docBodyChildren.forEach((e) {
+        if (e.outerHtml.contains("<img")) {
+          _analysisHtmlImage(e, widgetList, onTapCallback);
+        } else if (e.outerHtml.contains("<iframe")) {
+          widgetList.add(_createVideo(onTapCallback, e));
+        } else if (e.hasContent()) {
+          widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
+        }
+      });
+    }
+    return widgetList;
+  }
+
   List<Widget> parseHtml(String html, {Function onTapCallback}) {
     List<Widget> widgetList = new List();
     dom.Document document = parse(html);

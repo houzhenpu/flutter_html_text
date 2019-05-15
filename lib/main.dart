@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/htmlText/flutter_html_textview.dart';
 import 'package:oktoast/src/toast.dart';
+
+import 'htmlText/flutter_html_textview.dart';
+import 'htmlText/async_test.dart';
 
 void main() => runApp(MyApp());
 
@@ -56,78 +58,26 @@ class SingleChildScrollViewTestRoute extends StatelessWidget {
           children: <Widget>[
             Text('sdfsdf'),
             Text('sdfsdf'),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => new AsyncTest()));
+              },
+              child: Text('异步解析HTML'),
+            ),
             Text('sdfsdf'),
-            Text('sdfsdf'),
-            Container(
-              child: new HtmlTextView(
-                html,
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                htmlUl,
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                centerUrl,
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                colorUrl,
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                htmlOl,
-              ),
-            ),
-            Container(
-              child: new Text(
-                '测试',
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                moreHtml,
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                emStrong,
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                emStrong1,
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                imageHtml,
-              ),
-            ),
-            Container(
-              child: new HtmlTextView(
-                videoHtml,
-              ),
-            ),
-            Container(
-              child: HtmlTextView(blockQuote),
-            ),
-            VerticalDivider(
-              color: Colors.tealAccent[600],
-            ),
-            Divider(
-              color: Colors.tealAccent,
-            ),
-            Container(
-              child: HtmlTextView(backgroundHtml),
-            ),
-            Container(
-              child: HtmlTextView('测试'),
-            ),
+            HtmlTextView(html),
+            HtmlTextView(htmlUl),
+            HtmlTextView(centerUrl),
+            HtmlTextView(colorUrl),
+            HtmlTextView(htmlOl),
+            HtmlTextView(moreHtml),
+            HtmlTextView(emStrong),
+            HtmlTextView(emStrong1),
+            HtmlTextView(imageHtml),
+            HtmlTextView(videoHtml),
+            HtmlTextView(blockQuote),
+            HtmlTextView(backgroundHtml),
           ],
         ),
       ),
