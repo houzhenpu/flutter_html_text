@@ -20,7 +20,7 @@ class HtmlText extends StatelessWidget {
     HtmlParser parser = new HtmlParser(htmlTextStyle: this.htmlTextStyle);
 
     return Container(
-      padding: htmlTextStyle.padding,
+      padding: htmlTextStyle?.padding,
       child: this.data.startsWith(blockQuote)
           ? createBlockQuote(parser, context)
           : _createRichText(parser, context),
@@ -101,9 +101,7 @@ class HtmlParser {
     bool isTextPart;
     int tagIndex = 1;
     bool isAppendStartTag = false;
-    if (htmlTextStyle == null) {
-      htmlTextStyle = HtmlTextStyle();
-    }
+    htmlTextStyle = htmlTextStyle ?? HtmlTextStyle();
     while (html.length > 0) {
       isTextPart = true;
       if (this._getStackLastItem() == null ||
