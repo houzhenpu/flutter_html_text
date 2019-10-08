@@ -2,7 +2,7 @@ name: html_text
 description: A new Flutter package.
 version: 0.0.1
 author:
-homepage:
+homepage: https://github.com/houzhenpu/flutter_fullhtml_textview
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
