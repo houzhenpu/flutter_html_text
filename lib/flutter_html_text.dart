@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/htmlText/on_tap_data.dart';
+
 import 'constants.dart';
 import 'html_tags.dart';
-import 'package:flutter_app/htmlText/html_text_style.dart';
+import 'html_text_style.dart';
+import 'on_tap_data.dart';
 
 // ignore: must_be_immutable
 class HtmlText extends StatelessWidget {
@@ -13,18 +14,23 @@ class HtmlText extends StatelessWidget {
 
   HtmlTextStyle htmlTextStyle;
 
+  Container _dataContainer;
+
   HtmlText(this.data, {this.onTapCallback, this.htmlTextStyle});
 
   @override
   Widget build(BuildContext context) {
-    HtmlParser parser = new HtmlParser(htmlTextStyle: this.htmlTextStyle);
-
-    return Container(
-      padding: htmlTextStyle?.padding,
-      child: this.data.startsWith(blockQuote)
-          ? createBlockQuote(parser, context)
-          : _createRichText(parser, context),
-    );
+    if (_dataContainer == null) {
+      HtmlParser parser = new HtmlParser(htmlTextStyle: this.htmlTextStyle);
+      this.data = this.data.replaceAll('&nbsp;', ' ');
+      _dataContainer = Container(
+        padding: htmlTextStyle?.padding,
+        child: this.data.startsWith(blockQuote)
+            ? createBlockQuote(parser, context)
+            : _createRichText(parser, context),
+      );
+    }
+    return _dataContainer;
   }
 
   Stack createBlockQuote(HtmlParser parser, BuildContext context) {
@@ -157,7 +163,9 @@ class HtmlParser {
         this._parseEndTag(this._getStackLastItem());
       }
       if (html == last) {
-        throw 'Parse Error: ' + html;
+        //throw 'Parse Error: ' + html;出现不可解析标签直接显示
+        _appendNode(html);
+        html = '';
       }
       last = html;
     }
@@ -239,8 +247,8 @@ class HtmlParser {
     if (tagName == null) {
       pos = 0;
     } else {
-      if (tagName.contains('span')) {
-        this._spanStyle.removeLast();
+      if (tagName.contains('span') && this._spanStyle.length > 0) {
+        this._spanStyle?.removeLast();
       }
       for (pos = this._stack.length - 1; pos >= 0; pos--) {
         if (this._stack[pos] == tagName || tagName.contains(this._stack[pos])) {
@@ -269,26 +277,26 @@ class HtmlParser {
     TextDecoration textDecoration = TextDecoration.none;
     Color backgroundColor;
     htmlTextStyle.color = htmlTextStyle.defaultTextColor;
-    htmlTextStyle.fontSize = htmlTextStyle.defaultFontSize;
+    double fontSize = htmlTextStyle.fontSize;
     tags.forEach((tag) {
       switch (tag) {
         case 'h1':
-          htmlTextStyle.fontSize = 32.0;
+          fontSize = 32.0;
           break;
         case 'h2':
-          htmlTextStyle.fontSize = 24.0;
+          fontSize = 24.0;
           break;
         case 'h3':
-          htmlTextStyle.fontSize = 20.8;
+          fontSize = 20.8;
           break;
         case 'h4':
-          htmlTextStyle.fontSize = 16.0;
+          fontSize = 16.0;
           break;
         case 'h5':
-          htmlTextStyle.fontSize = 12.8;
+          fontSize = 12.8;
           break;
         case 'h6':
-          htmlTextStyle.fontSize = 11.2;
+          fontSize = 11.2;
           break;
         case 'a':
           textDecoration = htmlTextStyle.hrefTextDecoration;
@@ -353,7 +361,10 @@ class HtmlParser {
             }
             break;
           case 'font-size':
-            htmlTextStyle.fontSize = double.parse(value);
+            fontSize = double.parse(
+                value?.replaceAll(RegExp('([^.0-9])'), '') == ''
+                    ? '${htmlTextStyle.fontSize}'
+                    : value?.replaceAll(RegExp('([^.0-9])'), ''));
             break;
         }
       }
@@ -363,7 +374,7 @@ class HtmlParser {
       fontWeight: fontWeight,
       fontStyle: fontStyle,
       decoration: textDecoration,
-      fontSize: htmlTextStyle.fontSize,
+      fontSize: fontSize,
       height: htmlTextStyle.height,
       backgroundColor: backgroundColor,
     );

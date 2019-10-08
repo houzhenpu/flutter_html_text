@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:oktoast/src/toast.dart';
 
-import 'htmlText/flutter_html_textview.dart';
-import 'htmlText/async_test.dart';
+import 'flutter_html_textview.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return OKToast(
-      textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
-      backgroundColor: Colors.grey..withAlpha(200),
-      radius: 8.0,
-      child: MaterialApp(
-        home: SingleChildScrollViewTestRoute(),
-      ),
+    return MaterialApp(
+      home: SingleChildScrollViewTestRoute(),
     );
   }
 }
@@ -58,13 +51,6 @@ class SingleChildScrollViewTestRoute extends StatelessWidget {
           children: <Widget>[
             Text('sdfsdf'),
             Text('sdfsdf'),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => new AsyncTest()));
-              },
-              child: Text('异步解析HTML'),
-            ),
             Text('sdfsdf'),
             HtmlTextView(html),
             HtmlTextView(htmlUl),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/htmlText/constants.dart';
-import 'package:flutter_app/htmlText/flutter_html_text.dart';
-import 'package:flutter_app/htmlText/html_text_style.dart';
-import 'package:flutter_app/htmlText/on_tap_data.dart';
-import 'package:html/dom.dart' as dom;
-import 'package:html/parser.dart' show parse;
 
+import 'constants.dart';
+import 'flutter_html_text.dart';
+import 'html_text_style.dart';
 import 'network_image.dart';
+import 'package:html/dom.dart' as dom;
 
-class HtmlParser {
+import 'on_tap_data.dart';
+
+class ElementParserToWidgetList {
   static const EdgeInsetsGeometry _defaultImagePadding =
       EdgeInsets.only(top: 4.0, left: 0.0, right: 0.0, bottom: 8.0);
 
@@ -21,35 +21,21 @@ class HtmlParser {
 
   HtmlTextStyle htmlTextStyle;
 
-  HtmlParser(
+  ElementParserToWidgetList(
       {this.imagePadding = _defaultImagePadding,
       this.videoPadding = _defaultVideoPadding,
       this.htmlTextStyle});
 
-  Future<List<Widget>> parseHtmlToAsync(String html,
-      {Function onTapCallback}) async {
-    return await _getWidgetFromHtml(html, onTapCallback: onTapCallback);
-  }
-
-  Future<List<Widget>> _getWidgetFromHtml(String html, {Function onTapCallback}) async {
-    return parseHtml(html, onTapCallback: onTapCallback);
-  }
-
-  List<Widget> parseHtml(String html, {Function onTapCallback}) {
+  List<Widget> parseElementToWidgetList(dom.Element element,
+      {Function onTapCallback, List<String> imageList, String id}) {
     List<Widget> widgetList = new List();
-    List<dom.Element> docBodyChildren = parse(html).body.children;
-    if (docBodyChildren.length == 0) {
-      widgetList.add(Text(html));
-    } else {
-      docBodyChildren.forEach((e) {
-        if (e.outerHtml.contains("<img")) {
-          _analysisHtmlImage(e, widgetList, onTapCallback);
-        } else if (e.outerHtml.contains("<iframe")) {
-          widgetList.add(_createVideo(onTapCallback, e));
-        } else if (e.hasContent()) {
-          widgetList.add(_createHtmlText(e.outerHtml, onTapCallback));
-        }
-      });
+    if (element.outerHtml.contains("<img")) {
+      _analysisHtmlImage(element, widgetList, onTapCallback,
+          imageList: imageList, id: id);
+    } else if (element.outerHtml.contains("<iframe")) {
+      widgetList.add(_createVideo(onTapCallback, element));
+    } else if (element.hasContent()) {
+      widgetList.add(_createHtmlText(element.outerHtml, onTapCallback));
     }
 
     return widgetList;
@@ -81,7 +67,8 @@ class HtmlParser {
   }
 
   void _analysisHtmlImage(
-      dom.Element e, List<Widget> widgetList, Function onTapCallback) {
+      dom.Element e, List<Widget> widgetList, Function onTapCallback,
+      {List<String> imageList, String id}) {
     String outerHtml = e.outerHtml;
 
     var imgElements = e.getElementsByTagName("img");
@@ -94,8 +81,9 @@ class HtmlParser {
     int imageIndex = 0;
     outerHtml.split(separator).forEach((html) {
       if (html.contains("<img")) {
-        _createImage(imgElements[imageIndex++].attributes['src'], widgetList,
-            onTapCallback);
+        String imageUrl = imgElements[imageIndex++].attributes['src'];
+        imageList?.add('"$imageUrl"');
+        _createImage(imageUrl, widgetList, onTapCallback, id: id);
       } else {
         widgetList.add(_createHtmlText(html, onTapCallback));
       }
@@ -103,17 +91,21 @@ class HtmlParser {
   }
 
   void _createImage(
-      String imageUrl, List<Widget> widgetList, Function onTapCallback) {
+      String imageUrl, List<Widget> widgetList, Function onTapCallback,
+      {String id}) {
     widgetList.add(new GestureDetector(
       onTap: () {
         if (onTapCallback != null) {
-          onTapCallback(OnTapData(imageUrl, type: OnTapType.img));
+          onTapCallback(OnTapData(imageUrl, type: OnTapType.img, id: id));
         }
       },
       child: Center(
         child: Container(
           padding: imagePadding,
-          child: createCachedNetworkImage(imageUrl),
+          child: NetworkImageClipper(
+            imageUrl,
+            id: id,
+          ),
         ),
       ),
     ));
