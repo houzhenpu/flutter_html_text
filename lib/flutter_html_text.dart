@@ -377,6 +377,8 @@ class HtmlParser {
       fontSize: fontSize,
       height: htmlTextStyle.height,
       backgroundColor: backgroundColor,
+      letterSpacing: htmlTextStyle.letterSpacing,
+      wordSpacing: htmlTextStyle.wordSpacing,
     );
   }
 

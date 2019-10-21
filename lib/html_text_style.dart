@@ -72,6 +72,12 @@ class HtmlTextStyle {
   static const EdgeInsetsGeometry defaultBlockQuotTextMargin =
       EdgeInsets.only(left: 15);
 
+  /// 字符间距  就是单个字母或者汉字之间的间隔，可以是负数
+  double letterSpacing;
+
+  /// 字间距 句字之间的间距
+  double wordSpacing;
+
   HtmlTextStyle({
     this.fontSize = 14.0,
     this.hrefTextDecoration = TextDecoration.none,
@@ -88,6 +94,8 @@ class HtmlTextStyle {
     this.blockQuotMargin = defaultBlockQuotMargin,
     this.blockQuotTextMargin = defaultBlockQuotTextMargin,
     this.padding = defaultPadding,
+    this.letterSpacing,
+    this.wordSpacing,
   });
 }
 
