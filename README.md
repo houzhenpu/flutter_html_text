@@ -67,9 +67,9 @@ HtmlParserToWidgetList(
 
 效果图如下：
 
-| ![](./preview/Screenshot_1.jpg)    |  ![](./preview/Screenshot_2.jpg)    | ![](./preview/Screenshot_3.jpg)   |  ![](./preview/Screenshot_4.jpg)   |
+| ![](./preview/Screenshot_1.png)    |  ![](./preview/Screenshot_2.png)    | ![](./preview/Screenshot_3.png)   |  ![](./preview/Screenshot_4.png)   |
 | :--------------------------------: | :---------------------------------: | :-------------------------------: | :-------------------------------:  |
-
+| ![](./preview/Screenshot_5.png)    |  |  |  |
 
 **觉得还可以的话，来个Star、Fork支持一波！有问题欢迎提Issue。**
 
