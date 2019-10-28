@@ -93,6 +93,9 @@ class HtmlParserToWidgetList {
     String outerHtml = e.outerHtml;
 
     var imgElements = e.getElementsByTagName("img");
+    if (imgElements.length == 0) {
+      imgElements.add(e);
+    }
     if (e.nodes.length > 1) {
       imgElements.forEach((f) {
         outerHtml = outerHtml.replaceAll(
