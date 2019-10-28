@@ -42,14 +42,14 @@ class HtmlParserToWidgetList {
   List<Widget> parseHtmlToWidgetList(String html,
       {Function onTapCallback, List<String> imageList, String id}) {
     List<Widget> widgetList = new List();
-    if(html == null){
+    if (html == null) {
       widgetList.add(Container());
       return widgetList;
     }
     List<dom.Element> docBodyChildren = parse(html).body.children;
     if (docBodyChildren.length == 0) {
       widgetList.add(Container(
-        padding: EdgeInsets.only(left: 12, right: 12, top: 4, bottom: 4),
+        padding: htmlTextStyle.padding,
         child: Text(html),
       ));
     } else {
