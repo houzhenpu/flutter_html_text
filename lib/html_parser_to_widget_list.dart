@@ -50,7 +50,11 @@ class HtmlParserToWidgetList {
     if (docBodyChildren.length == 0) {
       widgetList.add(Container(
         padding: htmlTextStyle.padding,
-        child: Text(html),
+        child: Text(html,
+            style: TextStyle(
+                height: htmlTextStyle.height,
+                letterSpacing: htmlTextStyle.letterSpacing,
+                fontSize: htmlTextStyle.fontSize)),
       ));
     } else {
       docBodyChildren.forEach((e) {
