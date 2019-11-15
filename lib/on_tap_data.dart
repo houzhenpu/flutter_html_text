@@ -1,5 +1,5 @@
 class OnTapData {
-  OnTapData(this.url, {this.type = OnTapType.href, this.data,this.id});
+  OnTapData(this.url, {this.type = OnTapType.href, this.data,this.id,this.isOnLongPress});
 
   String url;
 
@@ -8,6 +8,8 @@ class OnTapData {
   dynamic data;
 
   String id;
+
+  bool isOnLongPress = false;
 }
 
 enum OnTapType {
@@ -15,3 +17,4 @@ enum OnTapType {
   img,
   video,
 }
+

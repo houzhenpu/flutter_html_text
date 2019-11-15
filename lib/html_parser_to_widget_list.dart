@@ -126,6 +126,12 @@ class HtmlParserToWidgetList {
           onTapCallback(OnTapData(imageUrl, type: OnTapType.img, id: id));
         }
       },
+      onLongPress: () {
+        if (onTapCallback != null) {
+          onTapCallback(OnTapData(imageUrl,
+              type: OnTapType.img, id: id, isOnLongPress: true));
+        }
+      },
       child: Center(
         child: Container(
           padding: imagePadding,
