@@ -22,7 +22,11 @@ class HtmlText extends StatelessWidget {
   Widget build(BuildContext context) {
     if (_dataContainer == null) {
       HtmlParser parser = new HtmlParser(htmlTextStyle: this.htmlTextStyle);
-      this.data = this.data.replaceAll('&nbsp;', ' ').replaceAll('&gt;', '>');
+      this.data = this
+          .data
+          .replaceAll('&nbsp;', ' ')
+          .replaceAll('&gt;', '>')
+          .replaceAll('&amp;', '&');
       _dataContainer = Container(
         padding: htmlTextStyle?.padding,
         child: this.data.startsWith(blockQuote)
