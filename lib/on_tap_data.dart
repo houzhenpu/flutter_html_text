@@ -1,5 +1,9 @@
 class OnTapData {
-  OnTapData(this.url, {this.type = OnTapType.href, this.data,this.id,this.isOnLongPress});
+  OnTapData(this.url,
+      {this.type = OnTapType.href,
+      this.data,
+      this.id,
+      this.isOnLongPress = false});
 
   String url;
 
@@ -17,4 +21,3 @@ enum OnTapType {
   img,
   video,
 }
-
