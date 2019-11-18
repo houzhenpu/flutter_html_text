@@ -37,8 +37,7 @@ class NetworkImageClipper extends StatefulWidget {
   }
 }
 
-class CachedImage extends State<NetworkImageClipper>
-    with AutomaticKeepAliveClientMixin<NetworkImageClipper> {
+class CachedImage extends State<NetworkImageClipper> {
   ImageClipper clipper;
 
   CachedImage();
@@ -128,9 +127,6 @@ class CachedImage extends State<NetworkImageClipper>
       ],
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 class ImageClipperInstance {
