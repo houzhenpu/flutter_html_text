@@ -126,7 +126,7 @@ class HtmlParserToWidgetList {
     outerHtml.split(separator).forEach((html) {
       if (html.contains("<img")) {
         String imageUrl = imgElements[imageIndex++].attributes['src'];
-        imageList?.add('$imageUrl');
+        imageList?.add(imageUrl);
         _createImage(imageUrl, widgetList, onTapCallback,
             id: id, context: context);
       } else {
