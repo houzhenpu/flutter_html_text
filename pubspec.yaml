@@ -27,6 +27,7 @@ flutter:
   assets:
     - assets/images/image_error.png
     - assets/images/long_picture_icon.png
+    - assets/images/feed_cell_photo_default_big.png
 
 # To add assets to your package, add an assets section, like this:
 # assets:
