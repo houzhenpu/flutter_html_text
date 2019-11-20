@@ -60,10 +60,18 @@ class CachedImage extends State<NetworkImageClipper> {
               )
             : _createCustomPaint(context)
         : CachedNetworkImage(
-            placeholder: (context, url) => new CircularProgressIndicator(),
+            placeholder: (context, url) => Stack(
+              alignment: AlignmentDirectional.center,
+              children: <Widget>[
+                Image(
+                  image: AssetImage(
+                      "assets/images/feed_cell_photo_default_big.png"),
+                ),
+                CircularProgressIndicator(),
+              ],
+            ),
             errorWidget: (context, url, error) => Image(
-              image: AssetImage("assets/images/image_error.png",
-                  package: 'html_text'),
+              image: AssetImage("assets/images/feed_cell_photo_default_big.png"),
             ),
             imageUrl: widget.imageUrl,
             fit: BoxFit.cover,
