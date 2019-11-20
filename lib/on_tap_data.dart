@@ -7,7 +7,7 @@ class OnTapData {
     this.data,
     this.id,
     this.isOnLongPress = false,
-    BuildContext context,
+    this.context,
   });
 
   String url;
@@ -19,6 +19,8 @@ class OnTapData {
   String id;
 
   bool isOnLongPress = false;
+
+  BuildContext context;
 }
 
 enum OnTapType {
