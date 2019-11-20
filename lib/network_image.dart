@@ -78,6 +78,7 @@ class CachedImage extends State<NetworkImageClipper> {
                 package: getPackageName()),
           ),
           CircularProgressIndicator(
+            backgroundColor: Colors.grey[200],
             valueColor: AlwaysStoppedAnimation(Colors.blue),
           ),
         ],
