@@ -77,7 +77,9 @@ class CachedImage extends State<NetworkImageClipper> {
             image: AssetImage("assets/images/feed_cell_photo_default_big.png",
                 package: getPackageName()),
           ),
-          CircularProgressIndicator(),
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(Colors.blue),
+          ),
         ],
       ),
       errorWidget: (context, url, error) => Image(
