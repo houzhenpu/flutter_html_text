@@ -2,6 +2,7 @@ var articleImageMap = Map<String, List<String>>();
 
 var articleImageFilePathMap = Map<String, Map<String, String>>();
 
+//清空
 void removeImageFromArticleImageMap(String articleId) {
   if (articleImageMap.containsKey(articleId)) {
     articleImageMap.remove(articleId);
