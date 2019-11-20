@@ -59,23 +59,31 @@ class CachedImage extends State<NetworkImageClipper> {
                 height: MediaQuery.of(context).size.height,
               )
             : _createCustomPaint(context)
-        : CachedNetworkImage(
-            placeholder: (context, url) => Stack(
-              alignment: AlignmentDirectional.center,
-              children: <Widget>[
-                Image(
-                  image: AssetImage(
-                      "assets/images/feed_cell_photo_default_big.png"),
-                ),
-                CircularProgressIndicator(),
-              ],
-            ),
-            errorWidget: (context, url, error) => Image(
-              image: AssetImage("assets/images/feed_cell_photo_default_big.png"),
-            ),
-            imageUrl: widget.imageUrl,
-            fit: BoxFit.cover,
+        : Hero(
+            tag: widget.imageUrl,
+            child: buildCachedNetworkImage(),
+            placeholderBuilder: (context, heroSize, widget) =>
+                buildCachedNetworkImage(),
           );
+  }
+
+  CachedNetworkImage buildCachedNetworkImage() {
+    return CachedNetworkImage(
+      placeholder: (context, url) => Stack(
+        alignment: AlignmentDirectional.center,
+        children: <Widget>[
+          Image(
+            image: AssetImage("assets/images/feed_cell_photo_default_big.png"),
+          ),
+          CircularProgressIndicator(),
+        ],
+      ),
+      errorWidget: (context, url, error) => Image(
+        image: AssetImage("assets/images/feed_cell_photo_default_big.png"),
+      ),
+      imageUrl: widget.imageUrl,
+      fit: BoxFit.cover,
+    );
   }
 
   Future<String> getImageSingleFilePath(String id, String imageUrl) async {
