@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'ImageClipper.dart';
+import 'circle.dart';
 import 'image.dart';
 
 CachedNetworkImage createCachedNetworkImage(String imageUrl) {
@@ -77,9 +78,8 @@ class CachedImage extends State<NetworkImageClipper> {
             image: AssetImage("assets/images/feed_cell_photo_default_big.png",
                 package: getPackageName()),
           ),
-          CircularProgressIndicator(
-            backgroundColor: Colors.grey[200],
-            valueColor: AlwaysStoppedAnimation(Colors.blue),
+          SpinKitCircle(
+            color: Colors.blueAccent,
           ),
         ],
       ),
