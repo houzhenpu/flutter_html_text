@@ -50,6 +50,7 @@ class AsyncHtmlTextView {
         defaultTextColor: Color(0xff333333),
         letterSpacing: 1.0,
       ),
+      isInPackage: false,
     )
         .asyncParseHtmlToWidgetList(this.data,
             onTapCallback: this.onTapCallback, imageList: imageList, id: id)

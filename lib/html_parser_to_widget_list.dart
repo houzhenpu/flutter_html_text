@@ -22,10 +22,13 @@ class HtmlParserToWidgetList {
 
   HtmlTextStyle htmlTextStyle;
 
+  bool isInPackage = true;
+
   HtmlParserToWidgetList(
       {this.imagePadding = _defaultImagePadding,
       this.videoPadding = _defaultVideoPadding,
-      this.htmlTextStyle});
+      this.htmlTextStyle,
+      this.isInPackage = true});
 
   Future<List<Widget>> asyncParseHtmlToWidgetList(String html,
       {Function onTapCallback, List<String> imageList, String id}) async {
@@ -138,6 +141,7 @@ class HtmlParserToWidgetList {
           child: NetworkImageClipper(
             imageUrl,
             id: id,
+            isInPackage: isInPackage,
           ),
         ),
       ),

@@ -28,8 +28,9 @@ CachedNetworkImage createCachedNetworkImage(String imageUrl) {
 class NetworkImageClipper extends StatefulWidget {
   final String id;
   final String imageUrl;
+  bool isInPackage = true;
 
-  NetworkImageClipper(this.imageUrl, {this.id});
+  NetworkImageClipper(this.imageUrl, {this.id, this.isInPackage});
 
   @override
   State<StatefulWidget> createState() {
@@ -73,18 +74,22 @@ class CachedImage extends State<NetworkImageClipper> {
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           Image(
-            image: AssetImage("assets/images/feed_cell_photo_default_big.png"),
+            image: AssetImage("assets/images/feed_cell_photo_default_big.png",
+                package: getPackageName()),
           ),
           CircularProgressIndicator(),
         ],
       ),
       errorWidget: (context, url, error) => Image(
-        image: AssetImage("assets/images/feed_cell_photo_default_big.png"),
+        image: AssetImage("assets/images/feed_cell_photo_default_big.png",
+            package: getPackageName()),
       ),
       imageUrl: widget.imageUrl,
       fit: BoxFit.cover,
     );
   }
+
+  String getPackageName() => widget.isInPackage ? 'html_text' : null;
 
   Future<String> getImageSingleFilePath(String id, String imageUrl) async {
     return await DefaultCacheManager().getSingleFile(imageUrl).then((file) {
@@ -137,7 +142,7 @@ class CachedImage extends State<NetworkImageClipper> {
           bottom: 1,
           child: Image.asset(
             "assets/images/long_picture_icon.png",
-            package: 'html_text',
+            package: getPackageName(),
           ),
         ),
       ],
