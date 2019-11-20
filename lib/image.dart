@@ -2,6 +2,12 @@ var articleImageMap = Map<String, List<String>>();
 
 var articleImageFilePathMap = Map<String, Map<String, String>>();
 
+void removeImageFromArticleImageMap(String articleId) {
+  if (articleImageMap.containsKey(articleId)) {
+    articleImageMap.remove(articleId);
+  }
+}
+
 void addImageToArticleImageMap(String articleId, List<String> imageList) {
   if (articleImageMap.containsKey(articleId)) {
     articleImageMap.update(articleId, (value) => value..addAll(imageList));
