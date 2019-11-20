@@ -31,19 +31,36 @@ class HtmlParserToWidgetList {
       this.isInPackage = true});
 
   Future<List<Widget>> asyncParseHtmlToWidgetList(String html,
-      {Function onTapCallback, List<String> imageList, String id}) async {
+      {Function onTapCallback,
+      List<String> imageList,
+      String id,
+      BuildContext context}) async {
     return await _getWidgetListFromHtml(html,
-        onTapCallback: onTapCallback, imageList: imageList, id: id);
+        onTapCallback: onTapCallback,
+        imageList: imageList,
+        id: id,
+        context: context);
   }
 
   Future<List<Widget>> _getWidgetListFromHtml(String html,
-      {Function onTapCallback, List<String> imageList, String id}) async {
-    return parseHtmlToWidgetList(html,
-        onTapCallback: onTapCallback, imageList: imageList, id: id);
+      {Function onTapCallback,
+      List<String> imageList,
+      String id,
+      BuildContext context}) async {
+    return parseHtmlToWidgetList(
+      html,
+      onTapCallback: onTapCallback,
+      imageList: imageList,
+      id: id,
+      context: context,
+    );
   }
 
   List<Widget> parseHtmlToWidgetList(String html,
-      {Function onTapCallback, List<String> imageList, String id}) {
+      {Function onTapCallback,
+      List<String> imageList,
+      String id,
+      BuildContext context}) {
     List<Widget> widgetList = new List();
     if (html == null) {
       widgetList.add(Container());
@@ -63,7 +80,7 @@ class HtmlParserToWidgetList {
       docBodyChildren.forEach((e) {
         if (e.outerHtml.contains("<img")) {
           _analysisHtmlImage(e, widgetList, onTapCallback,
-              imageList: imageList, id: id);
+              imageList: imageList, id: id, context: context);
         } else if (e.outerHtml.contains("<iframe")) {
           widgetList.add(_createVideo(onTapCallback, e));
         } else if (e.hasContent()) {
@@ -92,7 +109,7 @@ class HtmlParserToWidgetList {
 
   void _analysisHtmlImage(
       dom.Element e, List<Widget> widgetList, Function onTapCallback,
-      {List<String> imageList, String id}) {
+      {List<String> imageList, String id, BuildContext context}) {
     String outerHtml = e.outerHtml;
 
     var imgElements = e.getElementsByTagName("img");
@@ -110,7 +127,8 @@ class HtmlParserToWidgetList {
       if (html.contains("<img")) {
         String imageUrl = imgElements[imageIndex++].attributes['src'];
         imageList?.add('"$imageUrl"');
-        _createImage(imageUrl, widgetList, onTapCallback, id: id);
+        _createImage(imageUrl, widgetList, onTapCallback,
+            id: id, context: context);
       } else {
         String tempHtml = html.replaceAll('&nbsp;', '');
         if (!'<p></p>'.endsWith(tempHtml)) {
@@ -121,12 +139,17 @@ class HtmlParserToWidgetList {
   }
 
   void _createImage(
-      String imageUrl, List<Widget> widgetList, Function onTapCallback,
-      {String id}) {
+    String imageUrl,
+    List<Widget> widgetList,
+    Function onTapCallback, {
+    String id,
+    BuildContext context,
+  }) {
     widgetList.add(new GestureDetector(
       onTap: () {
         if (onTapCallback != null) {
-          onTapCallback(OnTapData(imageUrl, type: OnTapType.img, id: id));
+          onTapCallback(OnTapData(imageUrl,
+              type: OnTapType.img, id: id, context: context));
         }
       },
       onLongPress: () {
