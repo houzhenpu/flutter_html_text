@@ -30,8 +30,10 @@ class NetworkImageClipper extends StatefulWidget {
   final String id;
   final String imageUrl;
   bool isInPackage = true;
+  bool loadingOffstage;
 
-  NetworkImageClipper(this.imageUrl, {this.id, this.isInPackage});
+  NetworkImageClipper(this.imageUrl,
+      {this.id, this.isInPackage, this.loadingOffstage = true});
 
   @override
   State<StatefulWidget> createState() {
@@ -78,8 +80,11 @@ class CachedImage extends State<NetworkImageClipper> {
             image: AssetImage("assets/images/feed_cell_photo_default_big.png",
                 package: getPackageName()),
           ),
-          SpinKitCircle(
-            color: Colors.blueAccent,
+          Offstage(
+            offstage: widget.loadingOffstage,
+            child: SpinKitCircle(
+              color: Colors.blueAccent,
+            ),
           ),
         ],
       ),

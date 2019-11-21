@@ -23,12 +23,14 @@ class HtmlParserToWidgetList {
   HtmlTextStyle htmlTextStyle;
 
   bool isInPackage = true;
+  bool loadingOffstage;
 
   HtmlParserToWidgetList(
       {this.imagePadding = _defaultImagePadding,
       this.videoPadding = _defaultVideoPadding,
       this.htmlTextStyle,
-      this.isInPackage = true});
+      this.isInPackage = true,
+      this.loadingOffstage = true});
 
   Future<List<Widget>> asyncParseHtmlToWidgetList(String html,
       {Function onTapCallback,
@@ -168,6 +170,7 @@ class HtmlParserToWidgetList {
             imageUrl,
             id: id,
             isInPackage: isInPackage,
+            loadingOffstage: loadingOffstage,
           ),
         ),
       ),
