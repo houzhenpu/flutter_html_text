@@ -26,6 +26,7 @@ class HtmlText extends StatelessWidget {
           .data
           .replaceAll('&nbsp;', ' ')
           .replaceAll('&gt;', '>')
+          .replaceAll('&lt;', '>')
           .replaceAll('&amp;', '&');
       _dataContainer = Container(
         padding: htmlTextStyle?.padding,
