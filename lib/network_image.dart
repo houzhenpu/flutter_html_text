@@ -10,22 +10,6 @@ import 'ImageClipper.dart';
 import 'circle.dart';
 import 'image.dart';
 
-CachedNetworkImage createCachedNetworkImage(String imageUrl) {
-  return new CachedNetworkImage(
-    placeholder: (context, url) => new CircularProgressIndicator(),
-    errorWidget: (context, url, error) => Image(
-      image: AssetImage(
-        "assets/images/image_error.png",
-        package: 'html_text',
-      ),
-    ),
-    fadeInDuration: const Duration(seconds: 2),
-    fadeOutDuration: const Duration(seconds: 1),
-    imageUrl: imageUrl,
-    fit: BoxFit.cover,
-  );
-}
-
 class NetworkImageClipper extends StatefulWidget {
   final String id;
   final String imageUrl;
